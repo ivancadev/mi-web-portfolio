@@ -1,0 +1,104 @@
+---
+import Badge from './base/Badge.astro';
+import { THEMES } from '../theme';
+import { getLocaleFromPath, getDictionary } from '../i18n/util';
+
+const locale = getLocaleFromPath(Astro.url.pathname);
+const t = getDictionary(locale);
+const isEn = Astro.url.pathname.startsWith('/en');
+const base = isEn ? '/en/preview' : '/preview';
+---
+
+<section class="gallery container">
+  <header class="gallery-header">
+    <p class="eyebrow">{t['preview.label']}</p>
+    <h1>{t['preview.title']}</h1>
+    <p class="text-muted">{t['preview.subtitle']}</p>
+  </header>
+
+  <ul class="gallery-grid" role="list">
+    {THEMES.map((slug, index) => (
+      <li>
+        <a class="card" href={`${base}/${slug}`}>
+          <span class="card-index">{String(index + 1).padStart(2, '0')}</span>
+          <Badge tone={slug === 'premium' ? 'accent' : 'neutral'}>
+            {t[`preview.name.${slug}` as keyof typeof t]}
+          </Badge>
+          <h2>{t[`preview.name.${slug}` as keyof typeof t]}</h2>
+          <p class="text-muted">{t[`preview.desc.${slug}` as keyof typeof t]}</p>
+          <span class="card-cta">{t['preview.open']} →</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .gallery {
+    padding-block: var(--space-8) var(--space-9);
+  }
+
+  .gallery-header {
+    display: grid;
+    gap: var(--space-3);
+    max-width: var(--container-narrow);
+    margin-bottom: var(--space-7);
+  }
+
+  h1 {
+    font-size: var(--text-3xl);
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    gap: var(--space-4);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .card {
+    position: relative;
+    display: grid;
+    gap: var(--space-3);
+    align-content: start;
+    height: 100%;
+    padding: var(--space-5);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    transition:
+      transform var(--transition-base),
+      border-color var(--transition-base),
+      background-color var(--transition-base);
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-accent);
+    background: var(--color-surface-hover);
+  }
+
+  .card-index {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-text-faint);
+  }
+
+  h2 {
+    font-size: var(--text-xl);
+  }
+
+  .card p {
+    font-size: var(--text-sm);
+  }
+
+  .card-cta {
+    margin-top: var(--space-2);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-accent);
+  }
+</style>

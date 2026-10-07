@@ -1,0 +1,95 @@
+---
+import Badge from './base/Badge.astro';
+import { THEMES, type Theme } from '../theme';
+import { getLocaleFromPath, getDictionary } from '../i18n/util';
+
+interface Props {
+  current: Theme;
+}
+
+const { current } = Astro.props;
+const locale = getLocaleFromPath(Astro.url.pathname);
+const t = getDictionary(locale);
+const isEn = Astro.url.pathname.startsWith('/en');
+const base = isEn ? '/en/preview' : '/preview';
+const home = isEn ? '/en/' : '/';
+const currentName = t[`preview.name.${current}` as keyof typeof t];
+---
+
+<div class="preview-bar">
+  <div class="container preview-inner">
+    <p class="preview-info">
+      <Badge tone="accent">{t['preview.label']}</Badge>
+      <strong>{currentName}</strong>
+    </p>
+    <nav aria-label={t['preview.label']}>
+      <ul class="preview-links">
+        {THEMES.filter((slug) => slug !== current).map((slug) => (
+          <li>
+            <a href={`${base}/${slug}`} aria-current={slug === current ? 'true' : undefined}>
+              {t[`preview.name.${slug}` as keyof typeof t]}
+            </a>
+          </li>
+        ))}
+        <li><a class="preview-exit" href={home}>{t['preview.exit']} →</a></li>
+      </ul>
+    </nav>
+  </div>
+</div>
+
+<style>
+  .preview-bar {
+    position: sticky;
+    top: 0;
+    z-index: 60;
+    border-bottom: 1px solid var(--color-border-strong);
+    background: var(--color-bg-elevated);
+    padding-block: var(--space-3);
+  }
+
+  .preview-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
+
+  .preview-info {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: var(--text-sm);
+  }
+
+  .preview-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .preview-links a {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .preview-links a:hover {
+    color: var(--color-text);
+  }
+
+  .preview-links a[aria-current='true'] {
+    color: var(--color-accent);
+  }
+
+  .preview-exit {
+    color: var(--color-accent) !important;
+    font-weight: 600 !important;
+  }
+</style>

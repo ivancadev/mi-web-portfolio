@@ -1,7 +1,8 @@
-# ADR-002: Dirección visual — Dark premium (tentativo)
+# ADR-002: Dirección visual — Dark premium (en revisión)
 
-- **Estado:** Aceptado con gate de revisión en Fase 3
+- **Estado:** En revisión — galería de variantes (Fase 3b)
 - **Fecha:** 2026-10-07
+- **Última actualización:** 2026-10-07
 
 ## Contexto
 
@@ -18,6 +19,17 @@ Implementar en la Fase 3 una primera versión con:
 - Header con `backdrop-blur`.
 
 **Gate:** el usuario aprueba o pide cambios antes de Fase 5. Si se rechaza, se enmienda este ADR o se crea ADR-00X con nueva dirección.
+
+## Actualización Fase 3b
+
+El usuario prefiere dark premium **de momento**, pero pidió comparar con más opciones. Se creó una galería temporal en `/preview` con 4 variantes implementadas como overrides de tokens scoped:
+
+1. `premium` — la actual (favorita provisional)
+2. `editorial` — tipografía enorme, bordes visibles, mono labels, acento ámbar, sin gradientes
+3. `claro` — off-white minimalista, acento azul profundo
+4. `cyber` — verde neón/cian, tipografía mono, estilo terminal
+
+**Pendiente:** decisión final del usuario → la ganadora se funde en `tokens.css`, se eliminan las variantes y páginas `/preview`, y este ADR pasa a "Aceptado".
 
 ## Consecuencias
 

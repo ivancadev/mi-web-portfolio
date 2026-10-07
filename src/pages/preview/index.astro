@@ -1,0 +1,11 @@
+---
+import Base from '../../layouts/Base.astro';
+import PreviewGallery from '../../components/PreviewGallery.astro';
+import { getLocaleFromPath, getDictionary } from '../../i18n/util';
+
+const t = getDictionary(getLocaleFromPath(Astro.url.pathname));
+---
+
+<Base title={t['preview.title']} description={t['preview.subtitle']}>
+  <PreviewGallery />
+</Base>

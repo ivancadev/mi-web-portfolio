@@ -1,0 +1,50 @@
+/* Variante: Editorial oscuro tipográfico
+   Titulares enormes, bordes visibles, etiquetas mono, sin gradientes, acento ámbar. */
+
+html[data-theme='editorial'] {
+  --color-bg: #0d0c0a;
+  --color-bg-elevated: #16140f;
+  --color-surface: rgba(240, 236, 226, 0.04);
+  --color-surface-hover: rgba(240, 236, 226, 0.08);
+  --color-border: rgba(240, 236, 226, 0.22);
+  --color-border-strong: rgba(240, 236, 226, 0.45);
+
+  --color-text: #f0ece2;
+  --color-text-muted: rgba(240, 236, 226, 0.72);
+  --color-text-faint: rgba(240, 236, 226, 0.45);
+
+  --color-accent: #ffb454;
+  --color-accent-hover: #ffc97a;
+  --color-accent-soft: rgba(255, 180, 84, 0.14);
+  --color-accent-glow: rgba(255, 180, 84, 0.1);
+
+  --gradient-accent: #ffb454;
+  --gradient-text: #f0ece2;
+
+  --color-success: #7dd3a0;
+  --color-warning: #ffb454;
+
+  --shadow-sm: none;
+  --shadow-md: 0 8px 24px -8px rgba(0, 0, 0, 0.8);
+  --shadow-lg: 0 24px 64px -16px rgba(0, 0, 0, 0.9);
+  --shadow-accent: none;
+
+  --radius-sm: 0.15rem;
+  --radius-md: 0.15rem;
+  --radius-lg: 0.15rem;
+  --radius-xl: 0.15rem;
+
+  --tracking-tight: -0.045em;
+  --text-hero: clamp(3rem, 2rem + 6vw, 7rem);
+
+  --grid-line: rgba(240, 236, 226, 0.08);
+}
+
+html[data-theme='editorial'] .eyebrow {
+  font-family: var(--font-mono);
+  font-weight: 500;
+}
+
+html[data-theme='editorial'] .hero-glow {
+  display: none;
+}

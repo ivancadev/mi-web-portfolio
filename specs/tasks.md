@@ -38,7 +38,13 @@ Leyenda: `⬜` pendiente · `🔁` en curso · `✅` completada · `❌` cancela
 - ✅ Componentes base: Button (3 variantes), Badge (4 tones), Section, Header, Footer
 - ✅ Hero con look dark premium (glow, grid, gradient text, badges)
 - ✅ `npm run check` + `npm run build` — 0 errores
-- ⬜ **Gate:** aprobación visual del usuario (`npm run dev`)
+- ✅ **Gate inicial:** usuario prefiere dark premium → pide más opciones
+
+### Fase 3b — Galería de variantes 🔁
+- ✅ `src/theme.ts` + 4 temas scoped (`premium`, `editorial`, `claro`, `cyber`)
+- ✅ `Base.astro` con prop `theme` → `data-theme` + theme-color dinámico
+- ✅ Páginas `/preview` (galería) + `/preview/[slug]` ×4 (ES y EN) con barra de navegación de variantes
+- ⬜ **Gate definitivo:** usuario elige variante → ganadora se funde en `tokens.css`, se eliminan las descartadas, ADR-002 → Aceptado, spec §9 actualizada
 
 ## Fase 4 — Secciones ⬜
 - ⬜ Schemas de Content Collections (projects, profile) + `content/tech.ts`

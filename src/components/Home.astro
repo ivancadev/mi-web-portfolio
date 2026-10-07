@@ -4,12 +4,19 @@ import Button from './base/Button.astro';
 import Section from './base/Section.astro';
 import Badge from './base/Badge.astro';
 import { getLocaleFromPath, getDictionary } from '../i18n/util';
+import type { Theme } from '../theme';
 
+interface Props {
+  theme?: Theme;
+}
+
+const { theme } = Astro.props;
 const locale = getLocaleFromPath(Astro.url.pathname);
 const t = getDictionary(locale);
 ---
 
-<Base>
+<Base theme={theme}>
+  <slot name="banner" />
   <section id="inicio" class="hero">
     <div class="hero-bg" aria-hidden="true">
       <div class="hero-glow"></div>

@@ -1,0 +1,19 @@
+---
+import Home from '../../../components/Home.astro';
+import PreviewBar from '../../../components/PreviewBar.astro';
+import { THEMES, isTheme } from '../../../theme';
+
+// /en/preview/*
+export function getStaticPaths() {
+  return THEMES.map((slug) => ({ params: { slug } }));
+}
+
+const { slug } = Astro.params;
+if (!isTheme(slug)) {
+  throw new Error(`Unknown theme: ${slug}`);
+}
+---
+
+<Home theme={slug}>
+  <PreviewBar slot="banner" current={slug} />
+</Home>
