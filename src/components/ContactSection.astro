@@ -1,4 +1,6 @@
 ---
+// Sección "Contacto": email (mailto + copiar al portapapeles), enlaces a redes
+// sociales (desde `profile`) y un bloque de disponibilidad.
 import { getEntry } from 'astro:content';
 import Section from './base/Section.astro';
 import Button from './base/Button.astro';
@@ -18,42 +20,49 @@ const p = profile.data;
 ---
 
 <Section id="contacto" eyebrow="Contact" title={t['contact.title']} subtitle={t['contact.subtitle']} align="center">
+  <!-- Botones: enviar email y copiar la dirección (data-copy lo lee el script) -->
   <div class="contact-actions">
     <Button href={`mailto:${p.email}`}>{t['contact.email']}</Button>
     <Button href="#" variant="outline" data-copy={p.email} data-copied-label={t['contact.copied']}>{t['contact.copy']}</Button>
   </div>
 
+  <!-- La dirección visible también se puede seleccionar/copiar manualmente -->
   <p class="contact-email" data-email>{p.email}</p>
 
+  <!-- Redes sociales: se generan desde profile.socials -->
   <ul class="contact-socials" role="list">
     {p.socials.map((social) => (
       <li>
-        <a href={social.url} target="_blank" rel="noopener noreferrer">{social.label} ↗</a>
+        <a href={social.url} target="_blank" rel="noopener noreferrer">{social.label}</a>
       </li>
     ))}
   </ul>
 
+  <!-- Disponibilidad y tiempo de respuesta -->
   <div class="contact-availability">
-    <p class="availability-label">{t['contact.available']}</p>
+    <span class="availability-label">{t['contact.available']}</span>
     <p>{t['contact.availableValue']}</p>
     <p class="availability-response">{t['contact.response']}</p>
   </div>
 </Section>
 
+<!-- Isla JS: copia el email al portapapeles; si falla, abre mailto -->
 <script>
   document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((btn) => {
     btn.addEventListener('click', async (event) => {
       event.preventDefault();
-      const email = btn.dataset.copy;
-      if (!email) return;
+      const email = btn.dataset.copy ?? '';
+      // Guarda el texto original para restaurarlo tras el aviso "copiado".
+      const original = btn.textContent ?? '';
+      const copied = btn.dataset.copiedLabel ?? 'Copied!';
       try {
         await navigator.clipboard.writeText(email);
-        const original = btn.textContent ?? '';
-        btn.textContent = btn.dataset.copiedLabel || 'Copied!';
-        setTimeout(() => {
+        btn.textContent = copied;
+        window.setTimeout(() => {
           btn.textContent = original;
         }, 2000);
       } catch {
+        // Portapapeles no disponible: caemos al envío por email.
         window.location.href = `mailto:${email}`;
       }
     });

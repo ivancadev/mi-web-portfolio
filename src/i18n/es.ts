@@ -1,3 +1,5 @@
+// Diccionario de textos en español (idioma por defecto, ver ADR-001).
+// Los componentes acceden por clave: t['hero.role'], t['nav.projects'], etc.
 export const es = {
   'nav.home': 'Inicio',
   'nav.projects': 'Proyectos',

@@ -1,5 +1,9 @@
 ---
+// Página de inicio en español (idioma por defecto, ver ADR-001).
+// Todo el contenido de la home vive en el componente <Home />, que detecta
+// el idioma a partir de la URL; por eso ES y EN reutilizan el mismo componente.
 import Home from '../components/Home.astro';
 ---
 
+<!-- Página de inicio (ES) -->
 <Home />

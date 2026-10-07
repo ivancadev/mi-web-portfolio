@@ -1,3 +1,7 @@
+// Iconos de marca para el grid de tecnologías (paquete `simple-icons`).
+// En tech.ts cada item referencia uno de estos por clave (campo `icon`).
+// Si una tecnología no está aquí (p. ej. Java, ServiceNow), TechGrid pinta
+// un monograma de reserva.
 import {
   siReact,
   siAstro,
@@ -28,6 +32,7 @@ import {
 
 import type { SimpleIcon } from 'simple-icons';
 
+// Mapa nombre-de-icono → objeto SimpleIcon (path SVG + color de marca `hex`).
 export const TECH_ICONS: Record<string, SimpleIcon> = {
   React: siReact,
   Astro: siAstro,

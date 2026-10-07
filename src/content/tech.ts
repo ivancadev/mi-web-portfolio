@@ -1,3 +1,7 @@
+// Datos del grid de tecnologías (ADR-005).
+// Cada item declara: nombre, categoría, nivel, icono opcional y una nota ES/EN.
+// El grid (TechGrid.astro) filtra por `category` y muestra `level` + `note` al hover.
+
 export type TechCategory =
   | 'frontend'
   | 'backend'

@@ -1,14 +1,31 @@
 ---
+// Pie de página: copyright, nota técnica y enlaces a redes sociales.
+// GitHub/LinkedIn NO están hardcodeados: se leen del contenido `profile`.
+import { getEntry } from 'astro:content';
 import { getLocaleFromPath, getDictionary } from '../i18n/util';
 
 const locale = getLocaleFromPath(Astro.url.pathname);
 const t = getDictionary(locale);
 const year = new Date().getFullYear();
+
+// Redes sociales definidas en src/content/profile/profile.json
+const profile = await getEntry('profile', 'profile');
+const socials = profile?.data.socials ?? [];
 ---
 
 <footer class="site-footer">
   <div class="container footer-inner">
     <p>© {year} {t['hero.name']}. {t['footer.rights']}</p>
+
+    <!-- Enlaces sociales (se abren en pestaña nueva) -->
+    <ul class="footer-socials" role="list">
+      {socials.map((social) => (
+        <li>
+          <a href={social.url} target="_blank" rel="noopener noreferrer">{social.label}</a>
+        </li>
+      ))}
+    </ul>
+
     <p class="footer-note">Astro · TypeScript · {locale === 'es' ? 'Bilingüe ES/EN' : 'Bilingual ES/EN'}</p>
   </div>
 </footer>
@@ -28,6 +45,25 @@ const year = new Date().getFullYear();
     gap: var(--space-3);
     font-size: var(--text-sm);
     color: var(--color-text-faint);
+  }
+
+  .footer-socials {
+    display: flex;
+    gap: var(--space-4);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .footer-socials a {
+    text-decoration: none;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    transition: color var(--transition-fast);
+  }
+
+  .footer-socials a:hover {
+    color: var(--color-accent);
   }
 
   .footer-note {

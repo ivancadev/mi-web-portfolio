@@ -1,4 +1,7 @@
 ---
+// Sección "Sobre mí". Lee el contenido `profile` y pinta:
+// bio, ubicación + tecnologías "en aprendizaje", tarjeta de certificación (CCST),
+// timeline de experiencia, formación y el grid de tecnologías (TechGrid).
 import { getEntry } from 'astro:content';
 import Section from './base/Section.astro';
 import Badge from './base/Badge.astro';
@@ -13,6 +16,7 @@ interface Props {
 const { locale } = Astro.props;
 const t = getDictionary(locale);
 
+// Contenido del perfil (bio, experiencia, formación, certificaciones, socials...).
 const profile = await getEntry('profile', 'profile');
 if (!profile) throw new Error('profile/profile.json not found');
 const p = profile.data;
@@ -21,9 +25,11 @@ const bio = isEs ? p.bio_es : p.bio_en;
 ---
 
 <Section id="sobre-mi" eyebrow="About" title={t['about.title']}>
+  <!-- Bloque superior: biografía + tarjeta de certificación -->
   <div class="about-top">
     <div class="about-bio">
       {bio.map((paragraph) => <p>{paragraph}</p>)}
+      <!-- Ubicación y chips de tecnologías "en aprendizaje" -->
       <div class="about-meta">
         <span class="meta-item">
           <span class="meta-label">{t['about.location']}</span>
@@ -40,6 +46,7 @@ const bio = isEs ? p.bio_es : p.bio_en;
       </div>
     </div>
 
+    <!-- Tarjeta destacada con la certificación (CCST de Cisco) -->
     <aside class="cert-card" aria-label={t['about.certs']}>
       <p class="cert-eyebrow">{t['about.certs']}</p>
       {p.certs.map((cert) => (
@@ -54,6 +61,7 @@ const bio = isEs ? p.bio_es : p.bio_en;
   </div>
 
   <div class="about-columns">
+    <!-- Experiencia: timeline (el orden del array = más reciente primero) -->
     <div class="about-block">
       <h3 class="block-title">{t['about.experience']}</h3>
       <ol class="timeline" data-reveal-stagger>
@@ -75,6 +83,7 @@ const bio = isEs ? p.bio_es : p.bio_en;
       </ol>
     </div>
 
+    <!-- Formación (DAM completado / Grado en curso según `status`) -->
     <div class="about-block">
       <h3 class="block-title">{t['about.education']}</h3>
       <ul class="edu-list">
@@ -93,6 +102,7 @@ const bio = isEs ? p.bio_es : p.bio_en;
     </div>
   </div>
 
+  <!-- Grid de tecnologías con filtros (componente interactivo) -->
   <div class="about-skills">
     <h3 class="block-title">{t['about.skills']}</h3>
     <TechGrid locale={locale} />

@@ -1,4 +1,6 @@
 ---
+// Página de inicio completa. Sirve para ES (/) y EN (/en/) porque el idioma
+// se deduce de la URL. Estructura: Hero + Proyectos + Sobre mí + Contacto.
 import Base from '../layouts/Base.astro';
 import Button from './base/Button.astro';
 import Badge from './base/Badge.astro';
@@ -12,6 +14,7 @@ const t = getDictionary(locale);
 ---
 
 <Base>
+  <!-- Hero: primera impresión. El glow y la cuadrícula son decorativos (aria-hidden) -->
   <section id="inicio" class="hero">
     <div class="hero-bg" aria-hidden="true">
       <div class="hero-glow"></div>
@@ -25,12 +28,14 @@ const t = getDictionary(locale);
       </h1>
       <p class="hero-tagline">{t['hero.tagline']}</p>
 
+      <!-- Chips con los rasgos clave del perfil -->
       <div class="hero-badges">
         <Badge tone="accent">{locale === 'es' ? 'SDD · Spec-first' : 'SDD · Spec-first'}</Badge>
         <Badge tone="learning">{locale === 'es' ? 'Docker · K8s · AWS' : 'Docker · K8s · AWS'}</Badge>
         <Badge tone="success">Cisco CCST Cybersecurity</Badge>
       </div>
 
+      <!-- CTAs principales (anclas a las secciones de la misma página) -->
       <div class="hero-ctas">
         <Button href="#proyectos">{t['hero.cta.projects']}</Button>
         <Button href="#contacto" variant="outline">{t['hero.cta.contact']}</Button>
@@ -38,6 +43,7 @@ const t = getDictionary(locale);
     </div>
   </section>
 
+  <!-- Secciones montadas como componentes independientes (cada una lee el contenido) -->
   <ProjectsSection locale={locale} />
 
   <AboutSection locale={locale} />

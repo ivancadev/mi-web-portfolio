@@ -1,9 +1,13 @@
 ---
+// Detalle de proyecto en español: ruta /proyectos/<slug> (ADR-006).
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import ProjectDetail from '../../components/ProjectDetail.astro';
 import { getDictionary } from '../../i18n/util';
 
+// getStaticPaths genera una página por cada entrada de la colección `projects`.
+// El `slug` de la URL es el id de la entrada (nombre del fichero JSON sin extensión)
+// y la entrada completa se pasa al componente vía props.
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
   return projects.map((project) => ({
@@ -15,6 +19,7 @@ export async function getStaticPaths() {
 const { project } = Astro.props;
 ---
 
+<!-- Detalle del proyecto en ES; el título y la descripción usan los textos en español -->
 <Base title={`${project.data.title} · ${getDictionary('es')['projects.detail']}`} description={project.data.summary_es}>
   <ProjectDetail project={project} locale="es" />
 </Base>

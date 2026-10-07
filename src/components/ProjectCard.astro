@@ -1,4 +1,9 @@
 ---
+// Card de proyecto reutilizable. Tiene dos variantes:
+//  - "featured": card grande para los destacados (Kakebo, Ligera)
+//  - "compact": card pequeña para el grid "Otros proyectos"
+// Si existe la imagen `cover` la muestra optimizada; si no, cae a un
+// degradado con las iniciales del proyecto (nunca queda vacía).
 import type { CollectionEntry } from 'astro:content';
 import { Image } from 'astro:assets';
 import Badge from './base/Badge.astro';
@@ -15,8 +20,10 @@ interface Props {
 const { project, locale, variant = 'compact' } = Astro.props;
 const t = getDictionary(locale);
 const p = project.data;
+// Enlace interno al detalle, según el idioma.
 const href = locale === 'es' ? `/proyectos/${project.id}` : `/en/projects/${project.id}`;
 const summary = locale === 'es' ? p.summary_es : p.summary_en;
+// Iniciales (fallback visual) e índice de color derivado del id (rotación de matiz).
 const initials = p.title
   .split(/\s+/)
   .map((w) => w[0])
@@ -30,6 +37,7 @@ const cover = getProjectImage(p.cover);
 
 <article class:list={['card', `card-${variant}`]}>
   <a class="card-link" href={href} aria-label={`${p.title} — ${t['projects.detail']}`}>
+    <!-- Zona visual: imagen real o placeholder de iniciales -->
     <div class:list={['card-visual', cover && 'has-cover']} style={`--rot: ${hue}deg`}>
       {cover ? (
         <Image
@@ -46,6 +54,7 @@ const cover = getProjectImage(p.cover);
     </div>
 
     <div class="card-body">
+      <!-- Categoría y año -->
       <div class="card-meta">
         <Badge tone={p.featured ? 'accent' : 'neutral'}>
           {t[`projects.category.${p.category}` as keyof typeof t]}
@@ -56,6 +65,7 @@ const cover = getProjectImage(p.cover);
       <h3 class="card-title">{p.title}</h3>
       <p class="card-summary">{summary}</p>
 
+      <!-- Chips de stack (máximo 6 en destacada, 4 en compacta) + contador -->
       <ul class="card-stack" role="list">
         {p.stack.slice(0, variant === 'featured' ? 6 : 4).map((tech) => (
           <li>{tech}</li>
@@ -80,6 +90,7 @@ const cover = getProjectImage(p.cover);
 </article>
 
 <style>
+  /* Contenedor de la card (hover: elevación + borde acentuado) */
   .card {
     position: relative;
     display: flex;

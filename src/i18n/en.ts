@@ -1,3 +1,5 @@
+// Diccionario de textos en inglés. Debe tener EXACTAMENTE las mismas claves
+// que es.ts (el tipo Locale y los helpers asumen paridad ES/EN).
 export const en = {
   'nav.home': 'Home',
   'nav.projects': 'Projects',

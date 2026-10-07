@@ -1,20 +1,30 @@
 ---
+// Layout base de TODO el sitio: envuelve cada página con <html>, <head>,
+// cabecera, contenido y pie. Se encarga de:
+//  - SEO (title, description, canonical, Open Graph y hreflang ES/EN)
+//  - el idioma del documento (<html lang>)
+//  - el aviso de "saltar al contenido" para accesibilidad
+//  - cargar los estilos globales y el script de animación al hacer scroll
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { getLocaleFromPath, getDictionary } from '../i18n/util';
 import '../styles/global.css';
 
+// Props opcionales que cada página puede pasar para personalizar el SEO.
 interface Props {
   title?: string;
   description?: string;
 }
 
 const { title, description } = Astro.props;
+// Idioma deducido de la URL (/ = es, /en/... = en).
 const locale = getLocaleFromPath(Astro.url.pathname);
 const t = getDictionary(locale);
 
+// Título y descripción con valores por defecto si la página no los define.
 const fullTitle = title ? `${title} · ${t['hero.name']}` : `${t['hero.name']} — ${t['hero.role']}`;
 const desc = description ?? t['hero.tagline'];
+// URL canónica de esta página y su equivalente en el otro idioma (para hreflang/SEO).
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const otherLocale = locale === 'es' ? 'en' : 'es';
 const altPath = locale === 'es' ? `/en${Astro.url.pathname === '/' ? '/' : Astro.url.pathname}` : Astro.url.pathname.replace(/^\/en/, '') || '/';
@@ -22,6 +32,7 @@ const alternate = new URL(altPath, Astro.site);
 ---
 
 <!doctype html>
+<!-- El atributo lang refleja el idioma de la página (accesibilidad + SEO) -->
 <html lang={locale}>
   <head>
     <meta charset="UTF-8" />
@@ -29,25 +40,31 @@ const alternate = new URL(altPath, Astro.site);
     <meta name="generator" content={Astro.generator} />
     <title>{fullTitle}</title>
     <meta name="description" content={desc} />
+    <!-- SEO: URL canónica y variantes de idioma -->
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="alternate" hreflang={locale} href={canonical} />
     <link rel="alternate" hreflang={otherLocale} href={alternate} />
+    <!-- Open Graph (previsualización al compartir en redes) -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={desc} />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content={locale === 'es' ? 'es_ES' : 'en_GB'} />
     <meta name="theme-color" content="#0a0a0b" />
+    <!-- Marca el documento como "con JS": la animación de aparición (reveal.ts)
+         solo oculta elementos si existe JS, así garantizamos contenido sin JS. -->
     <script is:inline>document.documentElement.classList.add('js');</script>
   </head>
   <body>
+    <!-- Enlace de salto para usuarios de teclado/lectores de pantalla -->
     <a class="skip-link" href="#main">{t['nav.skip']}</a>
     <Header />
     <main id="main">
       <slot />
     </main>
     <Footer />
+    <!-- Isla JS mínima: activa las animaciones al hacer scroll (progressive enhancement) -->
     <script>import '../scripts/reveal';</script>
   </body>
 </html>

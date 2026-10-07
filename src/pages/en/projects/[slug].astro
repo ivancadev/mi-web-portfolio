@@ -1,9 +1,13 @@
 ---
+// Detalle de proyecto en inglés: ruta /en/projects/<slug> (ADR-006).
+// Es la versión espejo de /proyectos/<slug>; comparte el mismo componente
+// <ProjectDetail /> y solo cambia el idioma y los textos SEO.
 import { getCollection } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
 import ProjectDetail from '../../../components/ProjectDetail.astro';
 import { getDictionary } from '../../../i18n/util';
 
+// Igual que en ES: una página por entrada, con el id como slug.
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
   return projects.map((project) => ({
@@ -15,6 +19,7 @@ export async function getStaticPaths() {
 const { project } = Astro.props;
 ---
 
+<!-- Detalle del proyecto en EN; título y descripción en inglés -->
 <Base title={`${project.data.title} · ${getDictionary('en')['projects.detail']}`} description={project.data.summary_en}>
   <ProjectDetail project={project} locale="en" />
 </Base>

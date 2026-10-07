@@ -1,5 +1,9 @@
 ---
+// Página de inicio en inglés (prefijo de ruta `/en`, ver ADR-001).
+// Reutiliza exactamente el mismo componente <Home /> que la versión ES;
+// el idioma se resuelve por la URL dentro de <Home />.
 import Home from '../../components/Home.astro';
 ---
 
+<!-- Página de inicio (EN) -->
 <Home />

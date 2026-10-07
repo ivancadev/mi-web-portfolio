@@ -1,4 +1,6 @@
 ---
+// Cabecera fija (sticky) con el nombre, la navegación a las secciones y el
+// conmutador de idioma ES/EN.
 import { getLocaleFromPath, getDictionary } from '../i18n/util';
 
 const locale = getLocaleFromPath(Astro.url.pathname);
@@ -6,6 +8,8 @@ const t = getDictionary(locale);
 
 const path = Astro.url.pathname;
 const isEn = path === '/en' || path.startsWith('/en/');
+// Ruta de la home en el idioma actual; los anclas se prefijan con ella para que
+// funcionen también desde las páginas de detalle de proyecto.
 const homeHref = isEn ? '/en/' : '/';
 
 const links = [
@@ -14,7 +18,9 @@ const links = [
   { href: `${homeHref}#contacto`, label: t['nav.contact'] },
 ];
 
+// Enlace a la misma página en el otro idioma (quita/añade el prefijo /en).
 const otherHref = isEn ? (path.replace(/^\/en/, '') || '/') : `/en${path === '/' ? '/' : path}`;
+// Etiqueta del enlace al otro idioma (ES ↔ EN).
 const otherLang = isEn ? 'ES' : 'EN';
 ---
 
@@ -24,6 +30,7 @@ const otherLang = isEn ? 'ES' : 'EN';
       <span class="brand-dot" aria-hidden="true"></span>
       {t['hero.name']}
     </a>
+    <!-- Navegación principal; el último item es el cambio de idioma -->
     <nav aria-label={locale === 'es' ? 'Principal' : 'Main'}>
       <ul class="nav-list">
         {links.map((link) => (

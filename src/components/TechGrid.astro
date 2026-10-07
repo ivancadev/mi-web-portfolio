@@ -1,4 +1,8 @@
 ---
+// Grid de tecnologías (ADR-005):
+//  - Los datos viven en ../content/tech.ts (nombre, categoría, nivel, nota, icono).
+//  - Los botones filtran por categoría (isla JS mínima; sin JS se ven todas).
+//  - Al pasar el cursor o enfocar un item se revela su nivel y una nota.
 import { TECH, TECH_CATEGORIES, type TechItem } from '../content/tech';
 import { TECH_ICONS } from '../content/tech-icons';
 import type { Locale } from '../i18n/util';
@@ -11,12 +15,14 @@ interface Props {
 const { locale } = Astro.props;
 const t = getDictionary(locale);
 
+// Devuelve el icono de simple-icons o `undefined` (se usará un monograma).
 function getIcon(item: TechItem) {
   return item.icon ? TECH_ICONS[item.icon] : undefined;
 }
 ---
 
 <div class="tech" data-tech-grid>
+  <!-- Filtros por categoría (solo visibles si hay JS: se controla con la clase .js) -->
   <div class="tech-filters" role="group" aria-label={t['tech.filterLabel']}>
     <button class="tech-chip is-active" type="button" data-filter="all" aria-pressed="true">
       {t['tech.all']}
@@ -28,10 +34,12 @@ function getIcon(item: TechItem) {
     ))}
   </div>
 
+  <!-- Items; `data-category` alimenta el filtrado y `tabindex` da acceso por teclado -->
   <ul class="tech-grid" role="list" data-reveal-stagger>
     {TECH.map((item) => {
       const icon = getIcon(item);
       const note = locale === 'es' ? item.note_es : item.note_en;
+      // Monograma de reserva si no hay icono de marca (p. ej. Java, ServiceNow).
       const monogram = item.name.replace(/[^A-Za-z0-9]/g, '').slice(0, 2).toUpperCase();
       return (
         <li class="tech-item" data-category={item.category} tabindex="0">
@@ -45,6 +53,7 @@ function getIcon(item: TechItem) {
             )}
           </span>
           <span class="tech-name">{item.name}</span>
+          <!-- Panel que aparece al hover/focus con nivel + nota -->
           <span class="tech-reveal">
             <span class:list={['tech-level', `level-${item.level}`]}>
               {t[`level.${item.level}` as keyof typeof t]}
@@ -59,6 +68,7 @@ function getIcon(item: TechItem) {
   <p class="tech-hint text-muted">{t['tech.hoverHint']}</p>
 </div>
 
+<!-- Isla JS: filtra los items por categoría al pulsar un botón -->
 <script>
   document.querySelectorAll<HTMLElement>('[data-tech-grid]').forEach((grid) => {
     const buttons = grid.querySelectorAll<HTMLButtonElement>('[data-filter]');
@@ -67,11 +77,13 @@ function getIcon(item: TechItem) {
     buttons.forEach((btn) => {
       btn.addEventListener('click', () => {
         const filter = btn.dataset.filter ?? 'all';
+        // Marca el botón activo (estado visual + aria-pressed para accesibilidad).
         buttons.forEach((b) => {
           const active = b === btn;
           b.classList.toggle('is-active', active);
           b.setAttribute('aria-pressed', String(active));
         });
+        // Muestra/oculta items según la categoría elegida.
         items.forEach((item) => {
           item.hidden = !(filter === 'all' || item.dataset.category === filter);
         });

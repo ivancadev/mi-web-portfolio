@@ -1,4 +1,7 @@
 ---
+// Plantilla de detalle de un proyecto (usada por /proyectos/<slug> y
+// /en/projects/<slug>). Muestra: cabecera con enlaces, imagen principal,
+// galería de capturas y bloques de reto / rol / funcionalidades / stack.
 import type { CollectionEntry } from 'astro:content';
 import type { ImageMetadata } from 'astro';
 import { Image } from 'astro:assets';
@@ -17,8 +20,10 @@ const { project, locale } = Astro.props;
 const t = getDictionary(locale);
 const p = project.data;
 const isEs = locale === 'es';
+// Enlace de vuelta al listado, conservando el idioma.
 const home = isEs ? '/' : '/en/';
 const backHref = `${home}#proyectos`;
+// Fallback visual si aún no hay portada: iniciales + matiz por id.
 const initials = p.title
   .split(/\s+/)
   .map((w) => w[0])
@@ -27,12 +32,14 @@ const initials = p.title
   .toUpperCase();
 const hue = [...project.id].reduce((acc, ch) => acc + ch.charCodeAt(0), 0) % 60;
 
+// Resuelve la portada y las capturas; descarta las que aún no existan como archivo.
 const cover = getProjectImage(p.cover);
 const shots = p.screenshots
   .map((shot) => ({ alt: isEs ? shot.alt_es : shot.alt_en, img: getProjectImage(shot.name) }))
   .filter((shot): shot is { alt: string; img: ImageMetadata } => Boolean(shot.img));
 ---
 
+<!-- Cabecera: volver, categoría/año, título, resumen y CTAs a demo/repo -->
 <article class="detail container">
   <a class="back-link" href={backHref}>← {t['detail.back']}</a>
 
@@ -55,6 +62,7 @@ const shots = p.screenshots
     </div>
   </header>
 
+  <!-- Portada: imagen real si existe, si no el placeholder con iniciales -->
   {cover ? (
     <div class="detail-cover">
       <Image
@@ -72,10 +80,12 @@ const shots = p.screenshots
     </div>
   )}
 
+  <!-- Aviso solo cuando no hay ninguna imagen todavía -->
   {!cover && shots.length === 0 && (
     <p class="screens-pending text-muted">{t['detail.screensPending']}</p>
   )}
 
+  <!-- Galería de capturas (solo si hay imágenes resueltas) -->
   {shots.length > 0 && (
     <section class="detail-block detail-screens">
       <h2>{t['detail.screens']}</h2>
@@ -94,6 +104,7 @@ const shots = p.screenshots
     </section>
   )}
 
+  <!-- Reto y rol, lado a lado -->
   <div class="detail-grid">
     <section class="detail-block">
       <h2>{t['detail.problem']}</h2>
@@ -106,6 +117,7 @@ const shots = p.screenshots
     </section>
   </div>
 
+  <!-- Funcionalidades -->
   <section class="detail-block">
     <h2>{t['detail.features']}</h2>
     <ul class="feature-list">
@@ -113,6 +125,7 @@ const shots = p.screenshots
     </ul>
   </section>
 
+  <!-- Stack tecnológico -->
   <section class="detail-block">
     <h2>{t['detail.stack']}</h2>
     <ul class="stack-list" role="list">

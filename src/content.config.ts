@@ -1,17 +1,22 @@
+// Definición de las Content Collections (ADR-003). Astro valida en build que
+// cada archivo JSON de src/content cumpla el esquema Zod; si falta un campo
+// obligatorio, el build falla con un error claro.
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
+// Colección "projects": un archivo JSON por proyecto (id = nombre del archivo).
 const projects = defineCollection({
   loader: glob({ base: './src/content/projects', pattern: '**/*.json' }),
   schema: z.object({
     title: z.string(),
     year: z.number(),
     category: z.enum(['web', 'mobile']),
-    featured: z.boolean().default(false),
-    order: z.number().default(99),
-    url: z.string().url().optional(),
-    repo: z.string().url().optional(),
-    cover: z.string().optional(),
+    featured: z.boolean().default(false), // aparece como destacado en la home
+    order: z.number().default(99), // orden manual (menor = antes)
+    url: z.string().url().optional(), // demo pública (si existe)
+    repo: z.string().url().optional(), // repositorio (si existe)
+    cover: z.string().optional(), // nombre base de la imagen de portada
+    // Galería de capturas; cada imagen lleva alt por idioma.
     screenshots: z
       .array(
         z.object({
@@ -33,6 +38,7 @@ const projects = defineCollection({
   }),
 });
 
+// Colección "profile": un único archivo con los datos personales.
 const profile = defineCollection({
   loader: glob({ base: './src/content/profile', pattern: '**/*.json' }),
   schema: z.object({
@@ -42,6 +48,7 @@ const profile = defineCollection({
     email: z.string().email(),
     location_es: z.string(),
     location_en: z.string(),
+    // Redes sociales (GitHub, LinkedIn...): label + url.
     socials: z.array(
       z.object({
         label: z.string(),
@@ -50,6 +57,7 @@ const profile = defineCollection({
     ),
     bio_es: z.array(z.string()).min(1),
     bio_en: z.array(z.string()).min(1),
+    // Experiencia (el orden del array define el orden en el timeline).
     experience: z.array(
       z.object({
         company: z.string(),
@@ -62,6 +70,7 @@ const profile = defineCollection({
         highlights_en: z.array(z.string()).default([]),
       }),
     ),
+    // Formación: status controla si se muestra "Completado" o "En curso".
     education: z.array(
       z.object({
         title_es: z.string(),
@@ -78,7 +87,7 @@ const profile = defineCollection({
         focus_en: z.string(),
       }),
     ),
-    learning: z.array(z.string()),
+    learning: z.array(z.string()), // tecnologías "en aprendizaje"
   }),
 });
 

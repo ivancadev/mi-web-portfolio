@@ -1,4 +1,6 @@
 ---
+// Sección "Proyectos": lee la colección `projects`, separa los destacados de
+// los secundarios y renderiza una card por proyecto (destacada o compacta).
 import { getCollection } from 'astro:content';
 import Section from './base/Section.astro';
 import ProjectCard from './ProjectCard.astro';
@@ -13,18 +15,21 @@ const { locale } = Astro.props;
 const t = getDictionary(locale);
 
 const all = await getCollection('projects');
+// Orden manual por el campo `order` y división destacados / resto.
 const ordered = [...all].sort((a, b) => a.data.order - b.data.order);
 const featured = ordered.filter((p) => p.data.featured);
 const others = ordered.filter((p) => !p.data.featured);
 ---
 
 <Section id="proyectos" eyebrow={t['projects.featured']} title={t['projects.title']} subtitle={t['projects.subtitle']}>
+  <!-- Destacados: cards grandes en formato rejilla (con stagger al aparecer) -->
   <div class="featured-grid" data-reveal-stagger>
     {featured.map((project) => (
       <ProjectCard project={project} locale={locale} variant="featured" />
     ))}
   </div>
 
+  <!-- Resto de proyectos: cards compactas -->
   <div class="others">
     <h3 class="others-title">{t['projects.others']}</h3>
     <div class="others-grid" data-reveal-stagger>

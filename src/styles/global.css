@@ -1,3 +1,6 @@
+/* Estilos globales: reset, base tipográfica, accesibilidad, utilidades
+   compartidas y la animación de aparición al hacer scroll.
+   Los valores de diseño (colores, espacios...) salen de tokens.css. */
 @import './tokens.css';
 @import '@fontsource-variable/space-grotesk';
 @import '@fontsource-variable/inter';
