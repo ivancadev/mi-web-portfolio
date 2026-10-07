@@ -1,0 +1,61 @@
+---
+interface Props {
+  id?: string;
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+  align?: 'start' | 'center';
+  wide?: boolean;
+}
+
+const { id, eyebrow, title, subtitle, align = 'start', wide = false } = Astro.props;
+---
+
+<section {id} class:list={['section', align === 'center' && 'section-center']}>
+  <div class:list={['container', wide && 'container-wide']}>
+    {(eyebrow || title) && (
+      <header class="section-header">
+        {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+        {title && <h2 class="section-title">{title}</h2>}
+        {subtitle && <p class="section-subtitle">{subtitle}</p>}
+      </header>
+    )}
+    <slot />
+  </div>
+</section>
+
+<style>
+  .section {
+    padding-block: var(--space-section);
+  }
+
+  .section-header {
+    display: grid;
+    gap: var(--space-3);
+    margin-bottom: var(--space-7);
+    max-width: var(--container-narrow);
+  }
+
+  .section-center {
+    text-align: center;
+  }
+
+  .section-center .section-header {
+    margin-inline: auto;
+    justify-items: center;
+  }
+
+  .section-title {
+    font-size: var(--text-2xl);
+  }
+
+  .section-subtitle {
+    color: var(--color-text-muted);
+    font-size: var(--text-lg);
+  }
+
+  .container-wide {
+    width: min(100% - 2.5rem, 84rem);
+    margin-inline: auto;
+  }
+</style>

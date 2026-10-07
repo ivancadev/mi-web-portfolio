@@ -31,12 +31,14 @@ Leyenda: `⬜` pendiente · `🔁` en curso · `✅` completada · `❌` cancela
 - ✅ `Base.astro` (head, meta, lang, hreflang, skip-link, header, footer)
 - ✅ Scripts npm: `check`, `build`, `lint` — verificados: 0 errores, build OK
 
-## Fase 3 — Design system ⬜
-- ⬜ `tokens.css` (colores, tipografía, espaciado, radios, sombras)
-- ⬜ `global.css` (reset, tipografía, reduced-motion)
-- ⬜ Componentes base: Button, Section, Badge, Header, Footer
-- ⬜ Hero con estilo dark premium
-- ⬜ **Gate:** aprobación visual del usuario
+## Fase 3 — Design system ✅ (gate pendiente de aprobación visual)
+- ✅ `tokens.css` (colores, tipografía, espaciado, radios, sombras, motion)
+- ✅ Fuentes: Space Grotesk (display) + Inter Variable (texto) via Fontsource
+- ✅ `global.css` (reset, tipografía, reduced-motion, utilidades)
+- ✅ Componentes base: Button (3 variantes), Badge (4 tones), Section, Header, Footer
+- ✅ Hero con look dark premium (glow, grid, gradient text, badges)
+- ✅ `npm run check` + `npm run build` — 0 errores
+- ⬜ **Gate:** aprobación visual del usuario (`npm run dev`)
 
 ## Fase 4 — Secciones ⬜
 - ⬜ Schemas de Content Collections (projects, profile) + `content/tech.ts`

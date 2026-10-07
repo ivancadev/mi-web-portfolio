@@ -9,5 +9,29 @@ const year = new Date().getFullYear();
 <footer class="site-footer">
   <div class="container footer-inner">
     <p>© {year} {t['hero.name']}. {t['footer.rights']}</p>
+    <p class="footer-note">Astro · TypeScript · {locale === 'es' ? 'Bilingüe ES/EN' : 'Bilingual ES/EN'}</p>
   </div>
 </footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--color-border);
+    padding-block: var(--space-6);
+    background: var(--color-bg);
+  }
+
+  .footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    font-size: var(--text-sm);
+    color: var(--color-text-faint);
+  }
+
+  .footer-note {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+  }
+</style>

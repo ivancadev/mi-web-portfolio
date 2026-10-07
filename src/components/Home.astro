@@ -1,5 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
+import Button from './base/Button.astro';
+import Section from './base/Section.astro';
+import Badge from './base/Badge.astro';
 import { getLocaleFromPath, getDictionary } from '../i18n/util';
 
 const locale = getLocaleFromPath(Astro.url.pathname);
@@ -7,96 +10,116 @@ const t = getDictionary(locale);
 ---
 
 <Base>
-  <section id="inicio" class="hero container">
-    <p class="hero-role">{t['hero.role']}</p>
-    <h1>{t['hero.name']}</h1>
-    <p class="hero-tagline">{t['hero.tagline']}</p>
-    <div class="hero-ctas">
-      <a class="btn" href="#proyectos">{t['hero.cta.projects']}</a>
-      <a class="btn btn-ghost" href="#contacto">{t['hero.cta.contact']}</a>
+  <section id="inicio" class="hero">
+    <div class="hero-bg" aria-hidden="true">
+      <div class="hero-glow"></div>
+      <div class="hero-grid"></div>
+    </div>
+
+    <div class="container hero-inner">
+      <p class="eyebrow">{t['hero.role']}</p>
+      <h1 class="hero-title">
+        Iván <span class="gradient-text">Cano</span>
+      </h1>
+      <p class="hero-tagline">{t['hero.tagline']}</p>
+
+      <div class="hero-badges">
+        <Badge tone="accent">{locale === 'es' ? 'SDD · Spec-first' : 'SDD · Spec-first'}</Badge>
+        <Badge tone="learning">{locale === 'es' ? 'Docker · K8s · AWS' : 'Docker · K8s · AWS'}</Badge>
+        <Badge tone="success">Cisco CCST Cybersecurity</Badge>
+      </div>
+
+      <div class="hero-ctas">
+        <Button href="#proyectos">{t['hero.cta.projects']}</Button>
+        <Button href="#contacto" variant="outline">{t['hero.cta.contact']}</Button>
+      </div>
     </div>
   </section>
 
-  <section id="proyectos" class="container section-placeholder">
-    <h2>{t['projects.title']}</h2>
-    <p>{t['projects.subtitle']}</p>
-  </section>
+  <Section id="proyectos" eyebrow={t['projects.featured']} title={t['projects.title']} subtitle={t['projects.subtitle']}>
+    <!-- Cards de proyectos — Fase 4 -->
+  </Section>
 
-  <section id="sobre-mi" class="container section-placeholder">
-    <h2>{t['about.title']}</h2>
-  </section>
+  <Section id="sobre-mi" eyebrow="About" title={t['about.title']}>
+    <!-- Bio, experiencia, tech grid, ciberseguridad — Fase 4 -->
+  </Section>
 
-  <section id="contacto" class="container section-placeholder">
-    <h2>{t['contact.title']}</h2>
-    <p>{t['contact.subtitle']}</p>
-  </section>
+  <Section id="contacto" eyebrow="Contact" title={t['contact.title']} subtitle={t['contact.subtitle']} align="center">
+    <!-- CTA email + redes — Fase 4 -->
+  </Section>
 </Base>
 
 <style>
   .hero {
+    position: relative;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-height: calc(100vh - 4rem);
-    gap: 1rem;
-    padding-block: 4rem;
+    align-items: center;
+    overflow: clip;
+    min-height: calc(100vh - var(--header-height));
+    padding-block: var(--space-8);
   }
 
-  .hero-role {
-    color: var(--color-accent, #6366f1);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-size: 0.875rem;
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
   }
 
-  h1 {
-    font-size: clamp(2.5rem, 8vw, 5rem);
-    letter-spacing: -0.03em;
-    line-height: 1.05;
+  .hero-glow {
+    position: absolute;
+    top: -20%;
+    left: 50%;
+    translate: -50% 0;
+    width: min(60rem, 120vw);
+    aspect-ratio: 1.6;
+    background: radial-gradient(
+      ellipse at center,
+      var(--color-accent-glow) 0%,
+      transparent 62%
+    );
+    filter: blur(30px);
+    opacity: 0.55;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, #000 30%, transparent 75%);
+  }
+
+  .hero-inner {
+    position: relative;
+    display: grid;
+    gap: var(--space-5);
+    justify-items: start;
+    padding-block: var(--space-6);
+  }
+
+  .hero-title {
+    font-size: var(--text-hero);
+    line-height: var(--leading-tight);
   }
 
   .hero-tagline {
-    max-width: 40rem;
-    color: rgba(244, 244, 245, 0.7);
-    font-size: clamp(1rem, 2vw, 1.25rem);
+    max-width: 38rem;
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+  }
+
+  .hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
   }
 
   .hero-ctas {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.75rem;
-    margin-top: 1rem;
-  }
-
-  .btn {
-    padding: 0.7rem 1.4rem;
-    border-radius: 0.6rem;
-    background: var(--color-accent, #6366f1);
-    color: #fff;
-    font-weight: 600;
-    text-decoration: none;
-    transition: transform 150ms ease, opacity 150ms ease;
-  }
-
-  .btn:hover {
-    transform: translateY(-2px);
-    opacity: 0.92;
-  }
-
-  .btn-ghost {
-    background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-  }
-
-  .section-placeholder {
-    padding-block: 5rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
-  }
-
-  h2 {
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
-    letter-spacing: -0.02em;
-    margin-bottom: 0.5rem;
+    gap: var(--space-3);
+    margin-top: var(--space-2);
   }
 </style>
