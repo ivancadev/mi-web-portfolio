@@ -1,0 +1,34 @@
+---
+import { getLocaleFromPath, getDictionary } from '../i18n/util';
+
+const locale = getLocaleFromPath(Astro.url.pathname);
+const t = getDictionary(locale);
+
+const links = [
+  { href: '#proyectos', label: t['nav.projects'] },
+  { href: '#sobre-mi', label: t['nav.about'] },
+  { href: '#contacto', label: t['nav.contact'] },
+];
+
+const path = Astro.url.pathname;
+const isEn = path === '/en' || path.startsWith('/en/');
+const homeHref = isEn ? '/en/' : '/';
+const otherHref = isEn ? (path.replace(/^\/en/, '') || '/') : `/en${path === '/' ? '/' : path}`;
+const otherLang = isEn ? 'ES' : 'EN';
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href={homeHref}>{t['hero.name']}</a>
+    <nav aria-label={locale === 'es' ? 'Principal' : 'Main'}>
+      <ul class="nav-list">
+        {links.map((link) => (
+          <li><a href={link.href}>{link.label}</a></li>
+        ))}
+        <li>
+          <a class="lang-switch" href={otherHref} hreflang={isEn ? 'es' : 'en'}>{otherLang}</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>

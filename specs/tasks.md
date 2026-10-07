@@ -24,12 +24,12 @@ Leyenda: `⬜` pendiente · `🔁` en curso · `✅` completada · `❌` cancela
 - ✅ ADR-005 Tech grid con filtros y niveles
 - ✅ Info de Kakebo/Ligera extraída de sus webs (borradores pendientes de corrección del usuario)
 
-## Fase 2 — Scaffold Astro ⬜
-- ⬜ Crear proyecto Astro con TS strict
-- ⬜ Configurar i18n (`es` default, `en`)
-- ⬜ Estructura `src/` (components, content, i18n, layouts, pages, styles)
-- ⬜ `Base.astro` (head, meta, lang, skip-link, header, footer)
-- ⬜ Scripts npm: `check`, `build`, `lint`
+## Fase 2 — Scaffold Astro ✅
+- ✅ Crear proyecto Astro con TS strict (astro v7, scaffold manual)
+- ✅ Configurar i18n (`es` default, `en`) + sitemap
+- ✅ Estructura `src/` (components, content, i18n, layouts, pages, styles)
+- ✅ `Base.astro` (head, meta, lang, hreflang, skip-link, header, footer)
+- ✅ Scripts npm: `check`, `build`, `lint` — verificados: 0 errores, build OK
 
 ## Fase 3 — Design system ⬜
 - ⬜ `tokens.css` (colores, tipografía, espaciado, radios, sombras)

@@ -1,0 +1,13 @@
+---
+import { getLocaleFromPath, getDictionary } from '../i18n/util';
+
+const locale = getLocaleFromPath(Astro.url.pathname);
+const t = getDictionary(locale);
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p>© {year} {t['hero.name']}. {t['footer.rights']}</p>
+  </div>
+</footer>

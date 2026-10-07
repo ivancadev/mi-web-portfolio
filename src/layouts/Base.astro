@@ -1,0 +1,51 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { getLocaleFromPath, getDictionary } from '../i18n/util';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+const locale = getLocaleFromPath(Astro.url.pathname);
+const t = getDictionary(locale);
+
+const fullTitle = title ? `${title} · ${t['hero.name']}` : `${t['hero.name']} — ${t['hero.role']}`;
+const desc = description ?? t['hero.tagline'];
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const otherLocale = locale === 'es' ? 'en' : 'es';
+const altPath = locale === 'es' ? `/en${Astro.url.pathname === '/' ? '/' : Astro.url.pathname}` : Astro.url.pathname.replace(/^\/en/, '') || '/';
+const alternate = new URL(altPath, Astro.site);
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{fullTitle}</title>
+    <meta name="description" content={desc} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate" hreflang={locale} href={canonical} />
+    <link rel="alternate" hreflang={otherLocale} href={alternate} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={desc} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={locale === 'es' ? 'es_ES' : 'en_GB'} />
+    <meta name="theme-color" content="#0a0a0b" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{t['nav.skip']}</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
