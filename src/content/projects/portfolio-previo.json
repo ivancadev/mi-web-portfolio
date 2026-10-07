@@ -1,0 +1,27 @@
+{
+  "title": "Portfolio anterior",
+  "year": 2025,
+  "category": "web",
+  "featured": false,
+  "order": 6,
+  "url": "https://ivan-cano-portfolio.vercel.app/",
+  "stack": ["Next.js", "React", "JavaScript", "Tailwind CSS"],
+  "summary_es": "Versión anterior de mi portfolio personal: aplicación web moderna con foco en rendimiento, SEO y diseño responsive, desplegada en Vercel.",
+  "summary_en": "Previous version of my personal portfolio: modern web app focused on performance, SEO and responsive design, deployed on Vercel.",
+  "problem_es": "Presentar mi perfil, proyectos y tecnologías en un sitio rápido, responsive y bien posicionado en buscadores.",
+  "problem_en": "Present my profile, projects and technologies in a fast, responsive, search-engine-friendly site.",
+  "role_es": "Diseño y desarrollo completo, con estructura modular de componentes y despliegue en entorno cloud.",
+  "role_en": "End-to-end design and development, with a modular component structure and cloud deployment.",
+  "features_es": [
+    "Estructura modular de componentes",
+    "Optimización de rendimiento y SEO",
+    "Diseño responsive y navegación optimizada",
+    "Despliegue en Vercel"
+  ],
+  "features_en": [
+    "Modular component structure",
+    "Performance and SEO optimization",
+    "Responsive design and optimized navigation",
+    "Deployed on Vercel"
+  ]
+}

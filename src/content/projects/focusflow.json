@@ -1,0 +1,26 @@
+{
+  "title": "FocusFlow",
+  "year": 2024,
+  "category": "mobile",
+  "featured": false,
+  "order": 3,
+  "stack": ["Kotlin", "Android", "Jetpack Compose", "MVVM", "SQLite"],
+  "summary_es": "App Android de productividad: gestión de tareas por categorías, prioridades y fechas, con arquitectura MVVM y persistencia local.",
+  "summary_en": "Android productivity app: task management by categories, priorities and dates, with MVVM architecture and local persistence.",
+  "problem_es": "Organizar el día a día y el foco en un solo sitio, con recordatorios por categoría y prioridad sin depender de servicios en la nube.",
+  "problem_en": "Organize the day-to-day and focus in one place, with category and priority-driven task management without relying on cloud services.",
+  "role_es": "Desarrollo completo de la aplicación Android: arquitectura, interfaz con Jetpack Compose y capa de datos local.",
+  "role_en": "Full Android app development: architecture, Jetpack Compose UI and local data layer.",
+  "features_es": [
+    "Tareas con categorías, prioridades y fechas",
+    "Interfaz moderna con Jetpack Compose",
+    "Persistencia local con SQLite API",
+    "Arquitectura MVVM con capa de datos desacoplada"
+  ],
+  "features_en": [
+    "Tasks with categories, priorities and dates",
+    "Modern UI built with Jetpack Compose",
+    "Local persistence with SQLite API",
+    "MVVM architecture with decoupled data layer"
+  ]
+}

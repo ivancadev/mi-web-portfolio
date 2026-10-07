@@ -46,16 +46,29 @@ Leyenda: `⬜` pendiente · `🔁` en curso · `✅` completada · `❌` cancela
 - ✅ Variantes descartadas y páginas `/preview` eliminadas del código
 - ✅ ADR-002 → Aceptado · spec.md → v1.2
 
-## Fase 4 — Secciones ⬜
-- ⬜ Schemas de Content Collections (projects, profile) + `content/tech.ts`
-- ⬜ ProjectCard destacada (Kakebo, Ligera) + grid secundario "Otros proyectos"
-- ⬜ Sección Sobre mí: bio, experiencia, formación (DAM ✅ / grado en curso)
-- ⬜ Bloque ciberseguridad con badge CCST
-- ⬜ Badges "en aprendizaje": Docker, Kubernetes, AWS
-- ⬜ `TechGrid.astro` con filtros por categoría + nivel al hover (ADR-005)
-- ⬜ Sección Contacto
-- ⬜ Decisión detalle de proyecto (ADR nuevo si procede)
-- ⬜ Nav responsive + toggle de idioma
+## Fase 4 — Secciones ✅
+- ✅ Schemas de Content Collections (projects, profile) + `content/tech.ts` + `tech-icons.ts`
+- ✅ `ProjectCard.astro` (variantes destacada/compacta) + `ProjectsSection.astro`
+- ✅ Sección Sobre mí: bio, experiencia, formación (DAM ✅ / grado en curso) — `AboutSection.astro`
+- ✅ Bloque ciberseguridad con badge CCST
+- ✅ Badges "en aprendizaje": Docker, Kubernetes, AWS
+- ✅ `TechGrid.astro` con filtros por categoría + nivel al hover (ADR-005, island JS + `.js` para progressive enhancement)
+- ✅ Sección Contacto (`ContactSection.astro`): email + copiar, GitHub/LinkedIn, disponibilidad
+- ✅ ADR-006: páginas de detalle propias (`/proyectos/[slug]`, `/en/projects/[slug]`) — `ProjectDetail.astro`
+- ✅ Nav responsive + toggle de idioma (anclas con prefijo de home en páginas de detalle)
+- ✅ `npm run check` (0 errores) + `npm run build` (14 páginas + sitemap)
+- 🔁 **Gate:** revisión del usuario antes de cerrar la fase
+
+## Fase 4b — Capturas + animación ✅
+- ✅ Schema `projects`: `cover` + `screenshots[]` (con alt ES/EN); `has_screenshots` eliminado (estado derivado)
+- ✅ `src/lib/project-assets.ts` (glob de `src/assets/projects`, fallback si falta la imagen)
+- ✅ `ProjectCard` y `ProjectDetail` con `astro:assets` (`<Image>`) + galería de capturas
+- ✅ Contenido Kakebo/Ligera cableado (a la espera de los archivos de imagen del usuario)
+- ✅ Animación reveal con `IntersectionObserver` (`src/scripts/reveal.ts`) + CSS en `global.css` (progressive enhancement, stagger, reduced-motion)
+- ✅ Aplicada a secciones, cards, timeline, tech grid y contacto; hero excluido (LCP)
+- ✅ ADR-007 · spec v1.4 (RF-15, RF-16)
+- ✅ `npm run check` (0 errores) + `npm run build` (14 páginas)
+- 🔁 **Pendiente del usuario:** dejar `kakebo-cover`, `kakebo-1`, `kakebo-2`, `ligera-cover`, `ligera-1`, `ligera-2` en `src/assets/projects/`
 
 ## Fase 5 — Contenido real + i18n ⬜
 - ⬜ Redactar contenido desde CV + indicaciones

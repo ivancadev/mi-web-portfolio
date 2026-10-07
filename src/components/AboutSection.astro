@@ -1,0 +1,330 @@
+---
+import { getEntry } from 'astro:content';
+import Section from './base/Section.astro';
+import Badge from './base/Badge.astro';
+import TechGrid from './TechGrid.astro';
+import type { Locale } from '../i18n/util';
+import { getDictionary } from '../i18n/util';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getDictionary(locale);
+
+const profile = await getEntry('profile', 'profile');
+if (!profile) throw new Error('profile/profile.json not found');
+const p = profile.data;
+const isEs = locale === 'es';
+const bio = isEs ? p.bio_es : p.bio_en;
+---
+
+<Section id="sobre-mi" eyebrow="About" title={t['about.title']}>
+  <div class="about-top">
+    <div class="about-bio">
+      {bio.map((paragraph) => <p>{paragraph}</p>)}
+      <div class="about-meta">
+        <span class="meta-item">
+          <span class="meta-label">{t['about.location']}</span>
+          {isEs ? p.location_es : p.location_en}
+        </span>
+        <span class="meta-item">
+          <span class="meta-label">{t['about.learning']}</span>
+          <span class="learning-badges">
+            {p.learning.map((tech) => (
+              <Badge tone="learning">{tech}</Badge>
+            ))}
+          </span>
+        </span>
+      </div>
+    </div>
+
+    <aside class="cert-card" aria-label={t['about.certs']}>
+      <p class="cert-eyebrow">{t['about.certs']}</p>
+      {p.certs.map((cert) => (
+        <>
+          <p class="cert-issuer">{cert.issuer}</p>
+          <h3 class="cert-name">{cert.name}</h3>
+          <p class="cert-focus">{isEs ? cert.focus_es : cert.focus_en}</p>
+        </>
+      ))}
+      <span class="cert-verified" aria-hidden="true">✓</span>
+    </aside>
+  </div>
+
+  <div class="about-columns">
+    <div class="about-block">
+      <h3 class="block-title">{t['about.experience']}</h3>
+      <ol class="timeline" data-reveal-stagger>
+        {p.experience.map((job) => (
+          <li class="timeline-item">
+            <div class="timeline-head">
+              <h4>{isEs ? job.role_es : job.role_en}</h4>
+              <span class="timeline-period">{job.period ?? '—'}</span>
+            </div>
+            <p class="timeline-company">{job.company}</p>
+            <p class="timeline-summary">{isEs ? job.summary_es : job.summary_en}</p>
+            <ul class="timeline-highlights">
+              {(isEs ? job.highlights_es : job.highlights_en).map((h) => (
+                <li>{h}</li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ol>
+    </div>
+
+    <div class="about-block">
+      <h3 class="block-title">{t['about.education']}</h3>
+      <ul class="edu-list">
+        {p.education.map((edu) => (
+          <li class="edu-item">
+            <div>
+              <h4>{isEs ? edu.title_es : edu.title_en}</h4>
+              <span class="edu-period">{edu.period}</span>
+            </div>
+            <Badge tone={edu.status === 'completed' ? 'success' : 'accent'}>
+              {edu.status === 'completed' ? t['about.edu.completed'] : t['about.edu.inProgress']}
+            </Badge>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <div class="about-skills">
+    <h3 class="block-title">{t['about.skills']}</h3>
+    <TechGrid locale={locale} />
+  </div>
+</Section>
+
+<style>
+  .about-top {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: var(--space-6);
+    align-items: start;
+    margin-bottom: var(--space-8);
+  }
+
+  .about-bio {
+    display: grid;
+    gap: var(--space-4);
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+  }
+
+  .about-meta {
+    display: grid;
+    gap: var(--space-3);
+    margin-top: var(--space-2);
+    font-size: var(--text-sm);
+  }
+
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+
+  .meta-label {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-faint);
+  }
+
+  .learning-badges {
+    display: flex;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+  }
+
+  .cert-card {
+    position: relative;
+    display: grid;
+    gap: var(--space-2);
+    padding: var(--space-5);
+    background: linear-gradient(
+      160deg,
+      var(--color-accent-soft) 0%,
+      var(--color-surface) 60%
+    );
+    border: 1px solid color-mix(in srgb, var(--color-accent) 40%, var(--color-border));
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .cert-eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-accent-hover);
+  }
+
+  .cert-issuer {
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--color-text);
+    margin-top: var(--space-2);
+  }
+
+  .cert-name {
+    font-size: var(--text-lg);
+    line-height: var(--leading-snug);
+  }
+
+  .cert-focus {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .cert-verified {
+    position: absolute;
+    right: -0.5rem;
+    bottom: -1.5rem;
+    font-size: 5rem;
+    font-weight: 700;
+    color: var(--color-accent-soft);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .about-columns {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: var(--space-6);
+    margin-bottom: var(--space-8);
+  }
+
+  .about-block {
+    display: grid;
+    gap: var(--space-4);
+    align-content: start;
+  }
+
+  .block-title {
+    font-size: var(--text-lg);
+    color: var(--color-text);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .timeline {
+    display: grid;
+    gap: var(--space-5);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-left: 1px solid var(--color-border);
+  }
+
+  .timeline-item {
+    position: relative;
+    padding-left: var(--space-5);
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -0.34rem;
+    top: 0.4rem;
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background: var(--color-accent);
+    box-shadow: 0 0 0 3px var(--color-bg);
+  }
+
+  .timeline-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2);
+  }
+
+  .timeline-head h4 {
+    font-size: var(--text-base);
+    font-weight: 700;
+  }
+
+  .timeline-period {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-text-faint);
+  }
+
+  .timeline-company {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-accent-hover);
+    margin-top: 0.1rem;
+  }
+
+  .timeline-summary {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin-top: var(--space-2);
+  }
+
+  .timeline-highlights {
+    display: grid;
+    gap: 0.35rem;
+    margin-top: var(--space-2);
+    padding-left: 1.1rem;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .timeline-highlights li::marker {
+    color: var(--color-accent);
+  }
+
+  .edu-list {
+    display: grid;
+    gap: var(--space-3);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .edu-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .edu-item h4 {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    line-height: var(--leading-snug);
+  }
+
+  .edu-period {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-text-faint);
+  }
+
+  .about-skills {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  @media (max-width: 860px) {
+    .about-top,
+    .about-columns {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

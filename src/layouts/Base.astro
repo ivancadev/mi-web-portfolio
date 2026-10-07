@@ -39,6 +39,7 @@ const alternate = new URL(altPath, Astro.site);
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content={locale === 'es' ? 'es_ES' : 'en_GB'} />
     <meta name="theme-color" content="#0a0a0b" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
   </head>
   <body>
     <a class="skip-link" href="#main">{t['nav.skip']}</a>
@@ -47,5 +48,6 @@ const alternate = new URL(altPath, Astro.site);
       <slot />
     </main>
     <Footer />
+    <script>import '../scripts/reveal';</script>
   </body>
 </html>

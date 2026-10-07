@@ -1,0 +1,125 @@
+---
+import { getEntry } from 'astro:content';
+import Section from './base/Section.astro';
+import Button from './base/Button.astro';
+import type { Locale } from '../i18n/util';
+import { getDictionary } from '../i18n/util';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getDictionary(locale);
+
+const profile = await getEntry('profile', 'profile');
+if (!profile) throw new Error('profile/profile.json not found');
+const p = profile.data;
+---
+
+<Section id="contacto" eyebrow="Contact" title={t['contact.title']} subtitle={t['contact.subtitle']} align="center">
+  <div class="contact-actions">
+    <Button href={`mailto:${p.email}`}>{t['contact.email']}</Button>
+    <Button href="#" variant="outline" data-copy={p.email} data-copied-label={t['contact.copied']}>{t['contact.copy']}</Button>
+  </div>
+
+  <p class="contact-email" data-email>{p.email}</p>
+
+  <ul class="contact-socials" role="list">
+    {p.socials.map((social) => (
+      <li>
+        <a href={social.url} target="_blank" rel="noopener noreferrer">{social.label} ↗</a>
+      </li>
+    ))}
+  </ul>
+
+  <div class="contact-availability">
+    <p class="availability-label">{t['contact.available']}</p>
+    <p>{t['contact.availableValue']}</p>
+    <p class="availability-response">{t['contact.response']}</p>
+  </div>
+</Section>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((btn) => {
+    btn.addEventListener('click', async (event) => {
+      event.preventDefault();
+      const email = btn.dataset.copy;
+      if (!email) return;
+      try {
+        await navigator.clipboard.writeText(email);
+        const original = btn.textContent ?? '';
+        btn.textContent = btn.dataset.copiedLabel || 'Copied!';
+        setTimeout(() => {
+          btn.textContent = original;
+        }, 2000);
+      } catch {
+        window.location.href = `mailto:${email}`;
+      }
+    });
+  });
+</script>
+
+<style>
+  .contact-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-3);
+  }
+
+  .contact-email {
+    margin-top: var(--space-4);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    user-select: all;
+  }
+
+  .contact-socials {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-5);
+    margin-top: var(--space-5);
+    list-style: none;
+    padding: 0;
+  }
+
+  .contact-socials a {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .contact-socials a:hover {
+    color: var(--color-accent);
+  }
+
+  .contact-availability {
+    display: grid;
+    gap: var(--space-1);
+    justify-items: center;
+    margin-top: var(--space-7);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--color-border);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    max-width: 32rem;
+    margin-inline: auto;
+  }
+
+  .availability-label {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-faint);
+  }
+
+  .availability-response {
+    color: var(--color-accent-hover);
+    font-weight: 600;
+  }
+</style>

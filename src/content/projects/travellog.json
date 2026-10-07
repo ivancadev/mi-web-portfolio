@@ -1,0 +1,26 @@
+{
+  "title": "TravelLog",
+  "year": 2024,
+  "category": "mobile",
+  "featured": false,
+  "order": 4,
+  "stack": ["Kotlin", "Android", "MVC", "SQLite"],
+  "summary_es": "App Android para registrar viajes: lugares visitados, gastos y opiniones, con CRUD completo y navegación estructurada.",
+  "summary_en": "Android app to log trips: places visited, expenses and reviews, with full CRUD and structured navigation.",
+  "problem_es": "Guardar el recuerdo de cada viaje —dónde, cuánto y qué me pareció— en una app propia y offline, sin plataformas externas.",
+  "problem_en": "Keep the memory of every trip —where, how much and what I thought— in a self-contained offline app, without external platforms.",
+  "role_es": "Desarrollo completo de la app: modelo de datos relacional, operaciones CRUD e integración de formularios.",
+  "role_en": "Full app development: relational data model, CRUD operations and form integration.",
+  "features_es": [
+    "Registro de lugares visitados con gastos y valoraciones",
+    "Operaciones CRUD completas",
+    "Navegación estructurada entre secciones",
+    "Base de datos relacional con SQLite API"
+  ],
+  "features_en": [
+    "Log visited places with expenses and ratings",
+    "Full CRUD operations",
+    "Structured navigation across sections",
+    "Relational database with SQLite API"
+  ]
+}

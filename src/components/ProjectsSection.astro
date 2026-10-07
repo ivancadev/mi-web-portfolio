@@ -1,0 +1,62 @@
+---
+import { getCollection } from 'astro:content';
+import Section from './base/Section.astro';
+import ProjectCard from './ProjectCard.astro';
+import type { Locale } from '../i18n/util';
+import { getDictionary } from '../i18n/util';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getDictionary(locale);
+
+const all = await getCollection('projects');
+const ordered = [...all].sort((a, b) => a.data.order - b.data.order);
+const featured = ordered.filter((p) => p.data.featured);
+const others = ordered.filter((p) => !p.data.featured);
+---
+
+<Section id="proyectos" eyebrow={t['projects.featured']} title={t['projects.title']} subtitle={t['projects.subtitle']}>
+  <div class="featured-grid" data-reveal-stagger>
+    {featured.map((project) => (
+      <ProjectCard project={project} locale={locale} variant="featured" />
+    ))}
+  </div>
+
+  <div class="others">
+    <h3 class="others-title">{t['projects.others']}</h3>
+    <div class="others-grid" data-reveal-stagger>
+      {others.map((project) => (
+        <ProjectCard project={project} locale={locale} variant="compact" />
+      ))}
+    </div>
+  </div>
+</Section>
+
+<style>
+  .featured-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    gap: var(--space-5);
+  }
+
+  .others {
+    margin-top: var(--space-7);
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .others-title {
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+    font-weight: 600;
+  }
+
+  .others-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+    gap: var(--space-4);
+  }
+</style>

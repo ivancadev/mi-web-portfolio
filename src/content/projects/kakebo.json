@@ -1,0 +1,32 @@
+{
+  "title": "Kakebo",
+  "year": 2026,
+  "category": "web",
+  "featured": true,
+  "order": 1,
+  "url": "https://kakebo-sigma.vercel.app/",
+  "cover": "kakebo-cover",
+  "screenshots": [
+    { "name": "kakebo-1", "alt_es": "Registro de un gasto por categoría en Kakebo", "alt_en": "Logging an expense by category in Kakebo" },
+    { "name": "kakebo-2", "alt_es": "Resumen mensual del presupuesto en Kakebo", "alt_en": "Monthly budget summary in Kakebo" }
+  ],
+  "stack": ["Next.js", "React", "TypeScript", "Tailwind CSS"],
+  "summary_es": "App de finanzas personales basada en el método Kakebo japonés: registras gastos e ingresos por categorías y controlas tu presupuesto con una interfaz oscura y minimalista.",
+  "summary_en": "Personal finance app based on the Kakebo Japanese method: log expenses and income by category and keep track of your budget with a dark, minimal interface.",
+  "problem_es": "Controlar el gasto diario sin hojas de cálculo: una forma simple y visual de registrar movimientos y entender en qué se va el dinero cada mes.",
+  "problem_en": "Track everyday spending without spreadsheets: a simple, visual way to log transactions and understand where the money goes each month.",
+  "role_es": "Diseño y desarrollo completo: autenticación de usuarios, API y frontend, con despliegue en Vercel.",
+  "role_en": "End-to-end design and development: user authentication, API and frontend, deployed on Vercel.",
+  "features_es": [
+    "Autenticación con email y contraseña, con recuperación de acceso",
+    "Registro de gastos e ingresos por categorías",
+    "Vista de presupuesto y resumen mensual",
+    "UI oscura responsive (mobile-first)"
+  ],
+  "features_en": [
+    "Email and password authentication with account recovery",
+    "Expense and income tracking by category",
+    "Budget view and monthly summary",
+    "Dark, responsive mobile-first UI"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "title": "Ligera",
+  "year": 2026,
+  "category": "web",
+  "featured": true,
+  "order": 2,
+  "url": "https://ligeraapp.vercel.app/",
+  "cover": "ligera-cover",
+  "screenshots": [
+    { "name": "ligera-1", "alt_es": "Pantalla de entrenamiento de Ligera con series y cargas", "alt_en": "Ligera workout screen with sets and loads" },
+    { "name": "ligera-2", "alt_es": "Temporizador de descanso entre series en Ligera", "alt_en": "Rest timer between sets in Ligera" }
+  ],
+  "stack": ["Next.js", "React", "TypeScript", "Tailwind CSS", "PWA"],
+  "summary_es": "Workout tracker: registra tus ejercicios y series, controla el descanso entre ellas y observa cómo sube tu fuerza semana a semana. Instalable como PWA.",
+  "summary_en": "Workout tracker: log your lifts and sets, time your rest and watch your strength climb week after week. Installable as a PWA.",
+  "problem_es": "Entrenar con progresión sin cuadernos ni hojas de cálculo: registrar series y cargas en segundos y ver la evolución real de cada ejercicio.",
+  "problem_en": "Train with progression without notebooks or spreadsheets: log sets and loads in seconds and see the real evolution of every lift.",
+  "role_es": "Diseño y desarrollo completo: app web instalable (PWA) con seguimiento de progresión y temporizador de descanso.",
+  "role_en": "End-to-end design and development: installable web app (PWA) with strength progression tracking and a rest timer.",
+  "features_es": [
+    "Registro de ejercicios, series y cargas",
+    "Temporizador de descanso entre series",
+    "Seguimiento de la progresión de fuerza",
+    "PWA instalable con experiencia nativa"
+  ],
+  "features_en": [
+    "Log exercises, sets and loads",
+    "Rest timer between sets",
+    "Strength progression tracking",
+    "Installable PWA with native feel"
+  ]
+}

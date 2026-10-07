@@ -1,0 +1,112 @@
+{
+  "name": "Iván Cano",
+  "role_es": "Desarrollador Fullstack",
+  "role_en": "Fullstack Developer",
+  "email": "ivan.cano.p@outlook.com",
+  "location_es": "Madrid, España",
+  "location_en": "Madrid, Spain",
+  "socials": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/ivardev33"
+    },
+    {
+      "label": "LinkedIn",
+      "url": "https://www.linkedin.com/in/ivancanop"
+    }
+  ],
+  "bio_es": [
+    "Desarrollador de Aplicaciones Multiplataforma con experiencia construyendo productos web y móviles de principio a fin: desde el diseño de APIs REST hasta interfaces responsive con React y Astro.",
+    "Trabajo en Sagatech desarrollando el frontend y la API interna del módulo de Recursos Humanos de su ERP/CRM. Antes he prestado soporte técnico en entornos críticos (Renfe y Adif) y he trabajado como freelance en apps Android nativas.",
+    "Me tomo en serio la calidad: practico desarrollo spec-first (SDD) con buenas prácticas de IA, documentación y control de versiones con GitFlow. Ahora mismo estoy ampliando mi perfil hacia Cloud y DevOps (Docker, Kubernetes, AWS) y sigo muy ligado a la ciberseguridad."
+  ],
+  "bio_en": [
+    "Multiplatform Application Developer with experience building web and mobile products end to end: from designing REST APIs to responsive interfaces with React and Astro.",
+    "I work at Sagatech building the frontend and internal API for the HR module of their ERP/CRM. Before that I provided technical support in critical environments (Renfe and Adif) and worked freelance on native Android apps.",
+    "I take quality seriously: I practice spec-first development (SDD) with AI best practices, documentation and GitFlow version control. Right now I'm expanding towards Cloud and DevOps (Docker, Kubernetes, AWS) and I stay close to cybersecurity."
+  ],
+  "experience": [
+    {
+      "company": "Sagatech",
+      "role_es": "Desarrollador Frontend / Full Stack",
+      "role_en": "Frontend / Full Stack Developer",
+      "period": "07/2025 – Presente",
+      "summary_es": "Desarrollo del módulo de Recursos Humanos (Nóminas) del ERP/CRM corporativo: frontend completo y API interna asociada.",
+      "summary_en": "Building the Payroll HR module of the corporate ERP/CRM: full frontend and its internal API.",
+      "highlights_es": [
+        "APIs REST para gestión de nóminas con validación de datos y control de errores",
+        "Subida segura de documentos PDF con FormData y rutas protegidas",
+        "Páginas dinámicas responsive (tabla en desktop, tarjetas en móvil)",
+        "Componentes reutilizables accesibles: botones, buscadores, modales y formularios",
+        "Trabajo colaborativo con Git, GitFlow, PRs y revisión de código"
+      ],
+      "highlights_en": [
+        "REST APIs for payroll management with data validation and error handling",
+        "Secure PDF document upload with FormData and protected routes",
+        "Dynamic responsive pages (desktop table, mobile cards)",
+        "Reusable accessible components: buttons, search, modals and forms",
+        "Team workflow with Git, GitFlow, PRs and code review"
+      ]
+    },
+    {
+      "company": "Abai Solutions",
+      "role_es": "Soporte Técnico Nivel 1 (IT Service Desk)",
+      "role_en": "IT Service Desk — Level 1 Technical Support",
+      "summary_es": "Gestión de incidencias y soporte técnico para entornos críticos (Renfe y Adif), con seguimiento riguroso de SLAs.",
+      "summary_en": "Incident management and technical support for critical environments (Renfe and Adif), with rigorous SLA tracking.",
+      "highlights_es": [
+        "ServiceNow, BMC Helix y BMC Remedy",
+        "Resolución, escalado y seguimiento de incidencias bajo SLA"
+      ],
+      "highlights_en": [
+        "ServiceNow, BMC Helix and BMC Remedy",
+        "Resolve, escalate and track incidents under SLA"
+      ]
+    },
+    {
+      "company": "Freelance",
+      "role_es": "Desarrollador Android y Frontend",
+      "role_en": "Android and Frontend Developer",
+      "period": "09/2022 – Presente",
+      "summary_es": "Apps Android nativas con Kotlin y Jetpack Compose, y frontend web con React e integración de APIs REST.",
+      "summary_en": "Native Android apps with Kotlin and Jetpack Compose, plus web frontend with React and REST API integration.",
+      "highlights_es": [
+        "Arquitectura MVVM y Clean Architecture con SQLite/Room",
+        "Interfaces con Material Design y optimización de rendimiento",
+        "Operaciones CRUD e integración de APIs REST"
+      ],
+      "highlights_en": [
+        "MVVM and Clean Architecture with SQLite/Room",
+        "Material Design interfaces and performance tuning",
+        "CRUD operations and REST API integration"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "title_es": "CFGS en Desarrollo de Aplicaciones Multiplataforma (DAM)",
+      "title_en": "CFGS in Multiplatform Application Development (DAM)",
+      "period": "2023 – 2025",
+      "status": "completed"
+    },
+    {
+      "title_es": "Grado en Ingeniería Informática",
+      "title_en": "BSc in Computer Engineering",
+      "period": "2025 – Presente",
+      "status": "in-progress"
+    }
+  ],
+  "certs": [
+    {
+      "name": "Cisco Certified Cybersecurity Support Technician (CCST)",
+      "issuer": "Cisco",
+      "focus_es": "Ciberseguridad avanzada en entornos de tecnología de la operación",
+      "focus_en": "Advanced cybersecurity in operational technology environments"
+    }
+  ],
+  "learning": [
+    "Docker",
+    "Kubernetes",
+    "AWS"
+  ]
+}

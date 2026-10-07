@@ -1,8 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
 import Button from './base/Button.astro';
-import Section from './base/Section.astro';
 import Badge from './base/Badge.astro';
+import ProjectsSection from './ProjectsSection.astro';
+import AboutSection from './AboutSection.astro';
+import ContactSection from './ContactSection.astro';
 import { getLocaleFromPath, getDictionary } from '../i18n/util';
 
 const locale = getLocaleFromPath(Astro.url.pathname);
@@ -36,17 +38,11 @@ const t = getDictionary(locale);
     </div>
   </section>
 
-  <Section id="proyectos" eyebrow={t['projects.featured']} title={t['projects.title']} subtitle={t['projects.subtitle']}>
-    <!-- Cards de proyectos — Fase 4 -->
-  </Section>
+  <ProjectsSection locale={locale} />
 
-  <Section id="sobre-mi" eyebrow="About" title={t['about.title']}>
-    <!-- Bio, experiencia, tech grid, ciberseguridad — Fase 4 -->
-  </Section>
+  <AboutSection locale={locale} />
 
-  <Section id="contacto" eyebrow="Contact" title={t['contact.title']} subtitle={t['contact.subtitle']} align="center">
-    <!-- CTA email + redes — Fase 4 -->
-  </Section>
+  <ContactSection locale={locale} />
 </Base>
 
 <style>

@@ -6,12 +6,13 @@ interface Props {
   subtitle?: string;
   align?: 'start' | 'center';
   wide?: boolean;
+  reveal?: boolean;
 }
 
-const { id, eyebrow, title, subtitle, align = 'start', wide = false } = Astro.props;
+const { id, eyebrow, title, subtitle, align = 'start', wide = false, reveal = true } = Astro.props;
 ---
 
-<section {id} class:list={['section', align === 'center' && 'section-center']}>
+<section {id} class:list={['section', align === 'center' && 'section-center']} data-reveal={reveal ? '' : undefined}>
   <div class:list={['container', wide && 'container-wide']}>
     {(eyebrow || title) && (
       <header class="section-header">

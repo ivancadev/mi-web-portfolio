@@ -1,0 +1,289 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+import Badge from './base/Badge.astro';
+import Button from './base/Button.astro';
+import { getProjectImage } from '../lib/project-assets';
+import type { Locale } from '../i18n/util';
+import { getDictionary } from '../i18n/util';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  locale: Locale;
+}
+
+const { project, locale } = Astro.props;
+const t = getDictionary(locale);
+const p = project.data;
+const isEs = locale === 'es';
+const home = isEs ? '/' : '/en/';
+const backHref = `${home}#proyectos`;
+const initials = p.title
+  .split(/\s+/)
+  .map((w) => w[0])
+  .join('')
+  .slice(0, 2)
+  .toUpperCase();
+const hue = [...project.id].reduce((acc, ch) => acc + ch.charCodeAt(0), 0) % 60;
+
+const cover = getProjectImage(p.cover);
+const shots = p.screenshots
+  .map((shot) => ({ alt: isEs ? shot.alt_es : shot.alt_en, img: getProjectImage(shot.name) }))
+  .filter((shot): shot is { alt: string; img: ImageMetadata } => Boolean(shot.img));
+---
+
+<article class="detail container">
+  <a class="back-link" href={backHref}>← {t['detail.back']}</a>
+
+  <header class="detail-header">
+    <div class="detail-meta">
+      <Badge tone={p.featured ? 'accent' : 'neutral'}>
+        {t[`projects.category.${p.category}` as keyof typeof t]}
+      </Badge>
+      <span class="detail-year">{p.year}</span>
+    </div>
+    <h1>{p.title}</h1>
+    <p class="detail-summary">{isEs ? p.summary_es : p.summary_en}</p>
+    <div class="detail-ctas">
+      {p.url && (
+        <Button href={p.url} external>{t['projects.demo']}</Button>
+      )}
+      {p.repo && (
+        <Button href={p.repo} variant="outline" external>{t['projects.repo']}</Button>
+      )}
+    </div>
+  </header>
+
+  {cover ? (
+    <div class="detail-cover">
+      <Image
+        src={cover}
+        alt={isEs ? `Vista principal de ${p.title}` : `Main view of ${p.title}`}
+        widths={[640, 1024, 1600]}
+        sizes="(max-width: 900px) 100vw, 84rem"
+        loading="eager"
+        decoding="async"
+      />
+    </div>
+  ) : (
+    <div class="detail-visual" style={`--rot: ${hue}deg`} role="img" aria-label={p.title}>
+      <span class="detail-initials" aria-hidden="true">{initials}</span>
+    </div>
+  )}
+
+  {!cover && shots.length === 0 && (
+    <p class="screens-pending text-muted">{t['detail.screensPending']}</p>
+  )}
+
+  {shots.length > 0 && (
+    <section class="detail-block detail-screens">
+      <h2>{t['detail.screens']}</h2>
+      <div class="shot-grid">
+        {shots.map((shot) => (
+          <Image
+            src={shot.img}
+            alt={shot.alt}
+            widths={[400, 720, 1080]}
+            sizes="(max-width: 700px) 100vw, 33vw"
+            loading="lazy"
+            decoding="async"
+          />
+        ))}
+      </div>
+    </section>
+  )}
+
+  <div class="detail-grid">
+    <section class="detail-block">
+      <h2>{t['detail.problem']}</h2>
+      <p>{isEs ? p.problem_es : p.problem_en}</p>
+    </section>
+
+    <section class="detail-block">
+      <h2>{t['detail.role']}</h2>
+      <p>{isEs ? p.role_es : p.role_en}</p>
+    </section>
+  </div>
+
+  <section class="detail-block">
+    <h2>{t['detail.features']}</h2>
+    <ul class="feature-list">
+      {(isEs ? p.features_es : p.features_en).map((feature) => <li>{feature}</li>)}
+    </ul>
+  </section>
+
+  <section class="detail-block">
+    <h2>{t['detail.stack']}</h2>
+    <ul class="stack-list" role="list">
+      {p.stack.map((tech) => <li>{tech}</li>)}
+    </ul>
+  </section>
+</article>
+
+<style>
+  .detail {
+    padding-block: var(--space-7) var(--space-9);
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .back-link {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+    width: fit-content;
+  }
+
+  .back-link:hover {
+    color: var(--color-accent);
+  }
+
+  .detail-header {
+    display: grid;
+    gap: var(--space-4);
+    max-width: 46rem;
+  }
+
+  .detail-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .detail-year {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-text-faint);
+  }
+
+  h1 {
+    font-size: var(--text-3xl);
+  }
+
+  .detail-summary {
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+  }
+
+  .detail-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-1);
+  }
+
+  .detail-cover {
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    overflow: hidden;
+    background: var(--color-surface);
+  }
+
+  .detail-cover img {
+    width: 100%;
+    height: auto;
+  }
+
+  .detail-screens {
+    grid-column: 1 / -1;
+  }
+
+  .shot-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    gap: var(--space-4);
+  }
+
+  .shot-grid img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    background: var(--color-bg);
+  }
+
+  .detail-visual {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 21 / 9;
+    border-radius: var(--radius-lg);
+    background: linear-gradient(135deg, var(--color-accent) 0%, #4f8cff 55%, #38d0ff 100%);
+    filter: hue-rotate(var(--rot, 0deg));
+    border: 1px solid var(--color-border);
+  }
+
+  .detail-initials {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+  }
+
+  .screens-pending {
+    font-size: var(--text-xs);
+    color: var(--color-text-faint);
+    text-align: center;
+  }
+
+  .detail-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    gap: var(--space-5);
+  }
+
+  .detail-block {
+    display: grid;
+    gap: var(--space-3);
+    align-content: start;
+    padding: var(--space-5);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+
+  .detail-block h2 {
+    font-size: var(--text-lg);
+    color: var(--color-accent-hover);
+  }
+
+  .detail-block p {
+    color: var(--color-text-muted);
+    font-size: var(--text-base);
+  }
+
+  .feature-list {
+    display: grid;
+    gap: var(--space-2);
+    padding-left: 1.2rem;
+    color: var(--color-text-muted);
+  }
+
+  .feature-list li::marker {
+    color: var(--color-accent);
+  }
+
+  .stack-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .stack-list li {
+    padding: 0.3rem 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    background: var(--color-bg);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-text-muted);
+  }
+</style>

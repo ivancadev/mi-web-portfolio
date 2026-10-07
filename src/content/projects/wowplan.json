@@ -1,0 +1,26 @@
+{
+  "title": "Wowplan",
+  "year": 2025,
+  "category": "mobile",
+  "featured": false,
+  "order": 5,
+  "stack": ["Kotlin", "Android", "Firebase", "MVC", "Realtime Database"],
+  "summary_es": "App colaborativa para organizar planes en grupo: crea un plan, apúntate en tiempo real y mira el contador de participantes actualizarse al instante.",
+  "summary_en": "Collaborative app to organize group plans: create a plan, sign up in real time and watch the participant counter update live.",
+  "problem_es": "Coordinar planes de grupo entre muchas personas sin hilos interminables de mensajería: un punto único con estado en tiempo real.",
+  "problem_en": "Coordinate group plans across many people without endless messaging threads: a single source of truth with real-time state.",
+  "role_es": "Desarrollo de la app Android con sincronización en tiempo real sobre Firebase.",
+  "role_en": "Android app development with real-time sync powered by Firebase.",
+  "features_es": [
+    "Creación de planes y apuntados en tiempo real",
+    "Contador dinámico de participantes",
+    "Sincronización multiusuario con Firebase Realtime Database",
+    "Arquitectura MVC"
+  ],
+  "features_en": [
+    "Create plans and sign-ups in real time",
+    "Dynamic participant counter",
+    "Multi-user sync with Firebase Realtime Database",
+    "MVC architecture"
+  ]
+}

@@ -1,7 +1,7 @@
 # Especificación — Portfolio Web
 
 - **Estado:** Aprobada (Fase 0–1)
-- **Versión:** 1.2
+- **Versión:** 1.4
 - **Última actualización:** 2026-10-07
 - **Principios:** ver `docs/constitucion.md`
 
@@ -54,8 +54,8 @@ Navegación única: `Inicio · Proyectos · Sobre mí · Contacto` + toggle de i
 - FocusFlow (Android/Kotlin, productividad), TravelLog (Android/Kotlin, viajes), Wowplan (Kotlin/Firebase, planes en grupo), Portfolio anterior (Next.js).
 - Cards compactas: título, resumen corto, badges, enlace (repo o demo si existe).
 
-- Cada proyecto puede abrir enlace externo (demo / repo) y/o detalle interno.
-- **Decisión pendiente:** detalle en página propia vs. solo enlace externo → se resuelve en Fase 4.
+- Cada proyecto enlaza a su **página de detalle propia**: `/proyectos/[slug]` (ES) y `/en/projects/[slug]` (EN) — ver ADR-006.
+- Detalle: reto, rol, funcionalidades, stack, capturas (imágenes reales del autor vía `astro:assets`, placeholder de degradado hasta su entrega) y CTA a demo/repo.
 
 ### 5.3 Sobre mí
 
@@ -111,6 +111,10 @@ Navegación única: `Inicio · Proyectos · Sobre mí · Contacto` + toggle de i
 | RF-10 | Ciberseguridad + cert CCST visibles en Sobre mí | Alta |
 | RF-11 | Docker/K8s/AWS mostrados como "en aprendizaje" | Media |
 | RF-12 | Formación: DAM completado; grado solo como "en curso" | Alta |
+| RF-13 | Página de detalle por proyecto en ES y EN | Alta |
+| RF-14 | Volver al listado desde el detalle sin perder idioma | Alta |
+| RF-15 | Capturas de proyecto aportadas por el autor, optimizadas (WebP) y con texto alternativo | Alta |
+| RF-16 | Aparición progresiva al hacer scroll, sin perjudicar LCP ni accesibilidad | Media |
 
 ## 8. Requisitos no funcionales
 
@@ -152,3 +156,5 @@ Tokens de diseño en `src/styles/tokens.css` (color, tipografía, espaciado, rad
 | 2026-10-07 | 1.0 | Spec inicial aprobada |
 | 2026-10-07 | 1.1 | Constitución (`docs/constitucion.md`); proyectos destacados Kakebo + Ligera; grid "Otros proyectos"; tech grid interactiva (ADR-005); ciberseguridad + cert CCST; prácticas IA/SDD; aprendizaje Docker/K8s/AWS; formación DAM completado + grado en curso |
 | 2026-10-07 | 1.2 | Dirección visual confirmada: dark premium + cuadrícula suavizada (ADR-002 aceptado); galería de variantes evaluada y eliminada |
+| 2026-10-07 | 1.3 | Detalle de proyectos en páginas propias (ADR-006); CV descargable descartado |
+| 2026-10-07 | 1.4 | Capturas de proyecto aportadas por el autor con `astro:assets` (ADR-007); animación de aparición al scroll con `IntersectionObserver`; RF-15 y RF-16 |

@@ -1,0 +1,291 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+import Badge from './base/Badge.astro';
+import { getProjectImage } from '../lib/project-assets';
+import type { Locale } from '../i18n/util';
+import { getDictionary } from '../i18n/util';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  locale: Locale;
+  variant?: 'featured' | 'compact';
+}
+
+const { project, locale, variant = 'compact' } = Astro.props;
+const t = getDictionary(locale);
+const p = project.data;
+const href = locale === 'es' ? `/proyectos/${project.id}` : `/en/projects/${project.id}`;
+const summary = locale === 'es' ? p.summary_es : p.summary_en;
+const initials = p.title
+  .split(/\s+/)
+  .map((w) => w[0])
+  .join('')
+  .slice(0, 2)
+  .toUpperCase();
+const hue = [...project.id].reduce((acc, ch) => acc + ch.charCodeAt(0), 0) % 60;
+const external = p.url;
+const cover = getProjectImage(p.cover);
+---
+
+<article class:list={['card', `card-${variant}`]}>
+  <a class="card-link" href={href} aria-label={`${p.title} — ${t['projects.detail']}`}>
+    <div class:list={['card-visual', cover && 'has-cover']} style={`--rot: ${hue}deg`}>
+      {cover ? (
+        <Image
+          src={cover}
+          alt=""
+          widths={[320, 560, 840]}
+          sizes={variant === 'featured' ? '(max-width: 640px) 100vw, 40vw' : '6.5rem'}
+          loading="lazy"
+          decoding="async"
+        />
+      ) : (
+        <span class="card-initials" aria-hidden="true">{initials}</span>
+      )}
+    </div>
+
+    <div class="card-body">
+      <div class="card-meta">
+        <Badge tone={p.featured ? 'accent' : 'neutral'}>
+          {t[`projects.category.${p.category}` as keyof typeof t]}
+        </Badge>
+        <span class="card-year">{p.year}</span>
+      </div>
+
+      <h3 class="card-title">{p.title}</h3>
+      <p class="card-summary">{summary}</p>
+
+      <ul class="card-stack" role="list">
+        {p.stack.slice(0, variant === 'featured' ? 6 : 4).map((tech) => (
+          <li>{tech}</li>
+        ))}
+        {p.stack.length > (variant === 'featured' ? 6 : 4) && (
+          <li class="stack-more">+{p.stack.length - (variant === 'featured' ? 6 : 4)}</li>
+        )}
+      </ul>
+
+      <span class="card-cta">
+        {t['projects.view']}
+        <span aria-hidden="true">→</span>
+      </span>
+    </div>
+  </a>
+
+  {external && variant === 'featured' && (
+    <a class="card-demo" href={external} target="_blank" rel="noopener noreferrer">
+      {t['projects.demo']} ↗
+    </a>
+  )}
+</article>
+
+<style>
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition:
+      transform var(--transition-base),
+      border-color var(--transition-base),
+      box-shadow var(--transition-base);
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: color-mix(in srgb, var(--color-accent) 50%, var(--color-border));
+    box-shadow: var(--shadow-md);
+  }
+
+  .card-link {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .card-visual {
+    position: relative;
+    display: grid;
+    place-items: center;
+    aspect-ratio: 16 / 9;
+    background: linear-gradient(135deg, var(--color-accent) 0%, #4f8cff 55%, #38d0ff 100%);
+    filter: hue-rotate(var(--rot, 0deg));
+    overflow: hidden;
+  }
+
+  .card-visual.has-cover {
+    filter: none;
+    background: var(--color-bg-elevated, #141416);
+  }
+
+  .card-visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+  }
+
+  .card-visual::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: radial-gradient(ellipse at center, transparent 30%, #000 100%);
+    opacity: 0.5;
+  }
+
+  .card-visual.has-cover::after {
+    content: none;
+  }
+
+  .card-initials {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+  }
+
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    flex: 1;
+    padding: var(--space-5);
+  }
+
+  .card-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
+
+  .card-year {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-text-faint);
+  }
+
+  .card-title {
+    font-size: var(--text-xl);
+  }
+
+  .card-summary {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    flex: 1;
+  }
+
+  .card-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .card-stack li {
+    padding: 0.15rem 0.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    color: var(--color-text-muted);
+    background: var(--color-bg);
+  }
+
+  .card-stack .stack-more {
+    border-color: transparent;
+    color: var(--color-text-faint);
+  }
+
+  .card-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-top: var(--space-1);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-accent);
+    transition: gap var(--transition-fast);
+  }
+
+  .card:hover .card-cta {
+    gap: var(--space-3);
+  }
+
+  .card-demo {
+    position: absolute;
+    top: var(--space-3);
+    right: var(--space-3);
+    z-index: 2;
+    padding: 0.4rem 0.8rem;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: var(--radius-full);
+    background: rgba(10, 10, 11, 0.55);
+    backdrop-filter: blur(8px);
+    color: #fff;
+    font-size: var(--text-xs);
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color var(--transition-fast);
+  }
+
+  .card-demo:hover {
+    background: rgba(10, 10, 11, 0.8);
+  }
+
+  /* --- Variante compacta --- */
+  .card-compact .card-link {
+    display: grid;
+    grid-template-columns: 6.5rem 1fr;
+    align-items: stretch;
+  }
+
+  .card-compact .card-visual {
+    aspect-ratio: auto;
+    min-height: 100%;
+  }
+
+  .card-compact .card-initials {
+    font-size: 1.5rem;
+  }
+
+  .card-compact .card-body {
+    padding: var(--space-4);
+    gap: var(--space-2);
+  }
+
+  .card-compact .card-title {
+    font-size: var(--text-lg);
+  }
+
+  .card-compact .card-summary {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  @media (max-width: 480px) {
+    .card-compact .card-link {
+      grid-template-columns: 1fr;
+    }
+
+    .card-compact .card-visual {
+      aspect-ratio: 16 / 6;
+      min-height: 0;
+    }
+  }
+</style>
