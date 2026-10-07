@@ -7,10 +7,16 @@ import Badge from './base/Badge.astro';
 import ProjectsSection from './ProjectsSection.astro';
 import AboutSection from './AboutSection.astro';
 import ContactSection from './ContactSection.astro';
+import { getEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+import { getProfileImage } from '../lib/profile-assets';
 import { getLocaleFromPath, getDictionary } from '../i18n/util';
 
 const locale = getLocaleFromPath(Astro.url.pathname);
 const t = getDictionary(locale);
+
+const profile = await getEntry('profile', 'profile');
+const photo = profile ? getProfileImage(profile.data.photo) : undefined;
 ---
 
 <Base>
@@ -21,25 +27,36 @@ const t = getDictionary(locale);
       <div class="hero-grid"></div>
     </div>
 
-    <div class="container hero-inner">
-      <p class="eyebrow">{t['hero.role']}</p>
-      <h1 class="hero-title">
-        Iván <span class="gradient-text">Cano</span>
-      </h1>
-      <p class="hero-tagline">{t['hero.tagline']}</p>
+        <div class="container hero-inner">
+      <div class="hero-content">
+        <p class="eyebrow">{t['hero.role']}</p>
+        <h1 class="hero-title">
+          Iván <span class="gradient-text">Cano</span>
+        </h1>
+        <p class="hero-tagline">{t['hero.tagline']}</p>
 
-      <!-- Chips con los rasgos clave del perfil -->
-      <div class="hero-badges">
-        <Badge tone="accent">{locale === 'es' ? 'SDD · Spec-first' : 'SDD · Spec-first'}</Badge>
-        <Badge tone="learning">{locale === 'es' ? 'Docker · K8s · AWS' : 'Docker · K8s · AWS'}</Badge>
-        <Badge tone="success">Cisco CCST Cybersecurity</Badge>
+        <div class="hero-badges">
+          <Badge tone="accent">{locale === 'es' ? 'SDD · Spec-first' : 'SDD · Spec-first'}</Badge>
+          <Badge tone="learning">{locale === 'es' ? 'Docker · K8s · AWS' : 'Docker · K8s · AWS'}</Badge>
+          <Badge tone="success">Cisco CCST Cybersecurity</Badge>
+        </div>
+
+        <div class="hero-ctas">
+          <Button href="#proyectos">{t['hero.cta.projects']}</Button>
+          <Button href="#contacto" variant="outline">{t['hero.cta.contact']}</Button>
+        </div>
       </div>
 
-      <!-- CTAs principales (anclas a las secciones de la misma página) -->
-      <div class="hero-ctas">
-        <Button href="#proyectos">{t['hero.cta.projects']}</Button>
-        <Button href="#contacto" variant="outline">{t['hero.cta.contact']}</Button>
-      </div>
+      <figure class="hero-photo">
+        <img
+          src="/mi-foto.jpg"
+          alt="Iván Cano"
+          width="240"
+          height="240"
+          loading="eager"
+          decoding="async"
+        />
+      </figure>
     </div>
   </section>
 
@@ -95,10 +112,55 @@ const t = getDictionary(locale);
 
   .hero-inner {
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-7);
+    flex-wrap: wrap;
+    padding-block: var(--space-6);
+  }
+
+  .hero-content {
     display: grid;
     gap: var(--space-5);
     justify-items: start;
-    padding-block: var(--space-6);
+    max-width: 48rem;
+  }
+
+  .hero-photo {
+    flex-shrink: 0;
+  }
+
+  .hero-photo img {
+    width: clamp(160px, 22vw, 240px);
+    height: clamp(160px, 22vw, 240px);
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+    box-shadow: 0 10px 80px -20px rgba(96, 165, 250, 0.45);
+    border: 1px solid color-mix(in srgb, var(--color-primary) 25%, transparent);
+  }
+
+  @media (max-width: 720px) {
+    .hero-inner {
+      flex-direction: column-reverse;
+      align-items: center;
+      text-align: center;
+      gap: var(--space-6);
+    }
+
+    .hero-content {
+      justify-items: center;
+    }
+
+    .hero-badges,
+    .hero-ctas {
+      justify-content: center;
+    }
+
+    .hero-tagline {
+      margin-inline: auto;
+    }
   }
 
   .hero-title {

@@ -62,8 +62,8 @@ const shots = p.screenshots
     </div>
   </header>
 
-  <!-- Portada: imagen real si existe, si no el placeholder con iniciales -->
-  {cover ? (
+  <!-- Portada: imagen real si existe -->
+  {cover && (
     <div class="detail-cover">
       <Image
         src={cover}
@@ -73,10 +73,6 @@ const shots = p.screenshots
         loading="eager"
         decoding="async"
       />
-    </div>
-  ) : (
-    <div class="detail-visual" style={`--rot: ${hue}deg`} role="img" aria-label={p.title}>
-      <span class="detail-initials" aria-hidden="true">{initials}</span>
     </div>
   )}
 

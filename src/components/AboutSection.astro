@@ -2,10 +2,12 @@
 // Sección "Sobre mí". Lee el contenido `profile` y pinta:
 // bio, ubicación + tecnologías "en aprendizaje", tarjeta de certificación (CCST),
 // timeline de experiencia, formación y el grid de tecnologías (TechGrid).
+import { Image } from 'astro:assets';
 import { getEntry } from 'astro:content';
 import Section from './base/Section.astro';
 import Badge from './base/Badge.astro';
 import TechGrid from './TechGrid.astro';
+import { getProfileImage } from '../lib/profile-assets';
 import type { Locale } from '../i18n/util';
 import { getDictionary } from '../i18n/util';
 
@@ -16,18 +18,23 @@ interface Props {
 const { locale } = Astro.props;
 const t = getDictionary(locale);
 
-// Contenido del perfil (bio, experiencia, formación, certificaciones, socials...).
 const profile = await getEntry('profile', 'profile');
 if (!profile) throw new Error('profile/profile.json not found');
 const p = profile.data;
 const isEs = locale === 'es';
 const bio = isEs ? p.bio_es : p.bio_en;
+const photo = getProfileImage(p.photo);
 ---
 
 <Section id="sobre-mi" eyebrow="About" title={t['about.title']}>
   <!-- Bloque superior: biografía + tarjeta de certificación -->
   <div class="about-top">
     <div class="about-bio">
+      {photo && (
+        <figure class="about-photo">
+          <Image src={photo} alt="Iván Cano" format="webp" quality={80} />
+        </figure>
+      )}
       {bio.map((paragraph) => <p>{paragraph}</p>)}
       <!-- Ubicación y chips de tecnologías "en aprendizaje" -->
       <div class="about-meta">
