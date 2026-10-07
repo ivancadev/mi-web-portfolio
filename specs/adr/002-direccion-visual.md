@@ -22,12 +22,13 @@ Implementar en la Fase 3 una primera versión con:
 
 ## Actualización Fase 3b
 
-El usuario prefiere dark premium **de momento**, pero pidió comparar con más opciones. Se creó una galería temporal en `/preview` con 4 variantes implementadas como overrides de tokens scoped:
+El usuario prefiere dark premium **de momento**, pero pidió comparar con más opciones. Se creó una galería temporal en `/preview` con 5 variantes implementadas como overrides de tokens scoped:
 
 1. `premium` — la actual (favorita provisional)
-2. `editorial` — tipografía enorme, bordes visibles, mono labels, acento ámbar, sin gradientes
-3. `claro` — off-white minimalista, acento azul profundo
-4. `cyber` — verde neón/cian, tipografía mono, estilo terminal
+2. `aurora` — premium con orbes de luz difuminados en deriva lenta (sin cuadrícula)
+3. `editorial` — tipografía enorme, bordes visibles, mono labels, acento ámbar, sin gradientes
+4. `claro` — off-white minimalista, acento azul profundo
+5. `cyber` — verde neón/cian, tipografía mono, estilo terminal
 
 **Pendiente:** decisión final del usuario → la ganadora se funde en `tokens.css`, se eliminan las variantes y páginas `/preview`, y este ADR pasa a "Aceptado".
 

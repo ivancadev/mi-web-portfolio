@@ -42,8 +42,8 @@ Leyenda: `⬜` pendiente · `🔁` en curso · `✅` completada · `❌` cancela
 
 ### Fase 3b — Galería de variantes 🔁
 - ✅ `src/theme.ts` + 4 temas scoped (`premium`, `editorial`, `claro`, `cyber`)
-- ✅ `Base.astro` con prop `theme` → `data-theme` + theme-color dinámico
-- ✅ Páginas `/preview` (galería) + `/preview/[slug]` ×4 (ES y EN) con barra de navegación de variantes
+- ✅ Páginas `/preview` (galería) + `/preview/[slug]` ×4 (ES y EN) con barra de navegación
+- ✅ Variante 5: `aurora` — premium con orbes de luz difuminados en deriva lenta (sustituye la cuadrícula)
 - ⬜ **Gate definitivo:** usuario elige variante → ganadora se funde en `tokens.css`, se eliminan las descartadas, ADR-002 → Aceptado, spec §9 actualizada
 
 ## Fase 4 — Secciones ⬜
