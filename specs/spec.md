@@ -1,7 +1,7 @@
 # Especificación — Portfolio Web
 
 - **Estado:** Aprobada (Fase 0–1)
-- **Versión:** 1.1
+- **Versión:** 1.2
 - **Última actualización:** 2026-10-07
 - **Principios:** ver `docs/constitucion.md`
 
@@ -125,15 +125,17 @@ Navegación única: `Inicio · Proyectos · Sobre mí · Contacto` + toggle de i
 
 ## 9. Dirección visual
 
-**Tentativa — Dark premium (a validar por el usuario en Fase 3):**
+**Confirmada — Dark premium con cuadrícula suavizada (ADR-002):**
 
 - Fondo oscuro casi negro, superficies elevadas sutiles (bordes y sombras tenues).
-- Un color de acento vivo usado con moderación (CTAs, highlights, gradiente sutil).
-- Tipografía: sans geométrica de alta calidad para tamaños grandes + sans neutra para texto; escala tipográfica clara y titulares grandes.
+- Acento violeta `#7c5cff` con gradiente, usado con moderación (CTAs, highlights).
+- Hero: glow radial + cuadrícula muy tenue (`--grid-line` a 2.5% de opacidad) con máscara radial.
+- Tipografía: Space Grotesk (titulares) + Inter (texto); escala tipográfica clara.
 - Detalles premium: bordes 1px de baja opacidad, `backdrop-blur` en header, microinteracciones al hover, transiciones 150–250 ms, `prefers-reduced-motion` respetado.
 - Modo claro opcional como mejora posterior (no en alcance inicial).
+- Se evaluó una galería de 5 variantes (aurora, editorial, claro, cyber) — descartadas; galería eliminada del código.
 
-Tokens de diseño definidos en Fase 3 (color, tipografía, espaciado, radios, sombras).
+Tokens de diseño en `src/styles/tokens.css` (color, tipografía, espaciado, radios, sombras, motion).
 
 ## 10. Criterios de aceptación globales
 
@@ -149,3 +151,4 @@ Tokens de diseño definidos en Fase 3 (color, tipografía, espaciado, radios, so
 |---|---|---|
 | 2026-10-07 | 1.0 | Spec inicial aprobada |
 | 2026-10-07 | 1.1 | Constitución (`docs/constitucion.md`); proyectos destacados Kakebo + Ligera; grid "Otros proyectos"; tech grid interactiva (ADR-005); ciberseguridad + cert CCST; prácticas IA/SDD; aprendizaje Docker/K8s/AWS; formación DAM completado + grado en curso |
+| 2026-10-07 | 1.2 | Dirección visual confirmada: dark premium + cuadrícula suavizada (ADR-002 aceptado); galería de variantes evaluada y eliminada |

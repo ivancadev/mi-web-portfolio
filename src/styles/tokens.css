@@ -86,5 +86,5 @@
   --header-height: 4.25rem;
 
   /* --- Decoración --- */
-  --grid-line: rgba(255, 255, 255, 0.04);
+  --grid-line: rgba(255, 255, 255, 0.025);
 }

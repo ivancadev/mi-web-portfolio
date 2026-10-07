@@ -31,22 +31,6 @@ export const en = {
   'contact.copy': 'Copy email',
 
   'footer.rights': 'All rights reserved.',
-
-  'preview.label': 'Design preview',
-  'preview.exit': 'Exit preview',
-  'preview.title': 'Design variants gallery',
-  'preview.subtitle': 'Four design directions to choose from. The selection applies to the whole site.',
-  'preview.open': 'View variant',
-  'preview.name.premium': 'Dark Premium',
-  'preview.name.aurora': 'Aurora',
-  'preview.name.editorial': 'Dark Editorial',
-  'preview.name.claro': 'Light Minimal',
-  'preview.name.cyber': 'Cyber Neon',
-  'preview.desc.premium': 'Near-black background, violet glow, subtle grid, gradients and glassmorphism.',
-  'preview.desc.aurora': 'Like premium, but with slowly drifting blurred light orbs instead of the grid.',
-  'preview.desc.editorial': 'Bold typography, visible borders, mono labels, no gradients, amber accent.',
-  'preview.desc.claro': 'Off-white, lots of space, deep blue accent, elegant and sober.',
-  'preview.desc.cyber': 'Greenish black, neon green and cyan, terminal style, mono type.',
 } as const;
 
 export default en;

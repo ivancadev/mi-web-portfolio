@@ -31,20 +31,20 @@ Leyenda: `⬜` pendiente · `🔁` en curso · `✅` completada · `❌` cancela
 - ✅ `Base.astro` (head, meta, lang, hreflang, skip-link, header, footer)
 - ✅ Scripts npm: `check`, `build`, `lint` — verificados: 0 errores, build OK
 
-## Fase 3 — Design system ✅ (gate pendiente de aprobación visual)
+## Fase 3 — Design system ✅
 - ✅ `tokens.css` (colores, tipografía, espaciado, radios, sombras, motion)
 - ✅ Fuentes: Space Grotesk (display) + Inter Variable (texto) via Fontsource
 - ✅ `global.css` (reset, tipografía, reduced-motion, utilidades)
 - ✅ Componentes base: Button (3 variantes), Badge (4 tones), Section, Header, Footer
 - ✅ Hero con look dark premium (glow, grid, gradient text, badges)
 - ✅ `npm run check` + `npm run build` — 0 errores
-- ✅ **Gate inicial:** usuario prefiere dark premium → pide más opciones
+- ✅ **Gate:** usuario comparó 5 variantes en `/preview` (premium, aurora, editorial, claro, cyber)
 
-### Fase 3b — Galería de variantes 🔁
-- ✅ `src/theme.ts` + 4 temas scoped (`premium`, `editorial`, `claro`, `cyber`)
-- ✅ Páginas `/preview` (galería) + `/preview/[slug]` ×4 (ES y EN) con barra de navegación
-- ✅ Variante 5: `aurora` — premium con orbes de luz difuminados en deriva lenta (sustituye la cuadrícula)
-- ⬜ **Gate definitivo:** usuario elige variante → ganadora se funde en `tokens.css`, se eliminan las descartadas, ADR-002 → Aceptado, spec §9 actualizada
+### Fase 3b — Galería de variantes ✅ (cerrada)
+- ✅ Galería `/preview` + 5 variantes scoped (ES y EN)
+- ✅ **Decisión final: dark premium + cuadrícula suavizada** (`--grid-line` → 0.025)
+- ✅ Variantes descartadas y páginas `/preview` eliminadas del código
+- ✅ ADR-002 → Aceptado · spec.md → v1.2
 
 ## Fase 4 — Secciones ⬜
 - ⬜ Schemas de Content Collections (projects, profile) + `content/tech.ts`

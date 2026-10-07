@@ -12,7 +12,7 @@
 | i18n | Routing nativo de Astro (`es` default, `en`) | ADR-001 |
 | Contenido | Content Collections (perfil, proyectos, tech) | ADR-003 |
 | Estilos | CSS con tokens custom (sin framework Tailwind) | ADR-004 |
-| Dirección visual | Dark premium (tentativo) | ADR-002 |
+| Dirección visual | Dark premium + cuadrícula suavizada | ADR-002 |
 | Tech grid | Grid con filtros + niveles (island JS) | ADR-005 |
 
 ## Estructura del repo
@@ -55,11 +55,12 @@
 3. Estructura de carpetas, `Base.astro` con `lang`, meta, skip-link.
 4. ESLint/Prettier mínimos + scripts `check`, `build`, `lint`.
 
-### Fase 3 — Design system  ⬅ revisión visual aquí
+### Fase 3 — Design system ✅ (aprobado)
 1. `tokens.css`: paleta oscura, acento, escala tipográfica, espaciados, radios, sombras, transiciones.
 2. Reset global + tipografía base + `prefers-reduced-motion`.
 3. Componentes base: `Header`, `Footer`, `Button`, `Section`, `Tag/Badge`.
-4. Hero implementado con el look dark premium → **gate de revisión del usuario**.
+4. Hero implementado con el look dark premium.
+5. Galería de 5 variantes (`/preview`) evaluada por el usuario → **dark premium + cuadrícula suavizada** confirmado; galería eliminada del código.
 
 ### Fase 4 — Secciones
 1. `ProjectCard` destacada (Kakebo, Ligera) + grid secundario "Otros proyectos" desde Content Collections.

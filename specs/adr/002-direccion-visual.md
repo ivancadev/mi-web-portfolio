@@ -1,42 +1,42 @@
-# ADR-002: Dirección visual — Dark premium (en revisión)
+# ADR-002: Dirección visual — Dark premium con cuadrícula suavizada
 
-- **Estado:** En revisión — galería de variantes (Fase 3b)
+- **Estado:** Aceptado (decisión final del usuario)
 - **Fecha:** 2026-10-07
 - **Última actualización:** 2026-10-07
 
 ## Contexto
 
-El usuario quiere un estilo "original y moderno" y eligió la dirección **dark premium + acentos** (tipo Vercel/Linear), pero pide verlo en pantalla antes de confirmar.
+El usuario quiere un estilo "original y moderno". Se ofrecieron 4 direcciones; el usuario eligió **dark premium + acentos** (tipo Vercel/Linear) como favorita y pidió comparar con más variantes.
 
-## Decisión
+## Desarrollo (Fase 3b)
 
-Implementar en la Fase 3 una primera versión con:
+Se implementó una galería temporal en `/preview` con 5 variantes como overrides de tokens scoped (`html[data-theme="…"]`):
 
-- Fondo casi negro con superficies elevadas (bordes 1px a baja opacidad, sombras sutiles).
-- Un color de acento vivo para CTAs, highlights y gradiente sutil.
-- Tipografía sans geométrica para titulares grandes + sans neutra para texto.
+1. `premium` — dark premium con cuadrícula
+2. `aurora` — premium con orbes de luz difuminados (sin cuadrícula)
+3. `editorial` — tipografía enorme, bordes visibles, mono, acento ámbar
+4. `claro` — off-white minimalista, azul profundo
+5. `cyber` — verde neón/cian, tipografía mono, estilo terminal
+
+## Decisión final
+
+**Dark premium con la cuadrícula del hero suavizada** (`--grid-line: rgba(255,255,255,0.025)`, reducido desde 0.04).
+
+Elementos confirmados:
+
+- Fondo casi negro (`#0a0a0b`), superficies elevadas con bordes 1px a baja opacidad.
+- Acento violeta `#7c5cff` con gradiente hacia azul/cian para CTAs y highlights.
+- Glow radial + cuadrícula muy tenue con máscara radial en el Hero.
+- Tipografía: Space Grotesk (titulares) + Inter (texto).
 - Microinteracciones al hover, transiciones 150–250 ms, `prefers-reduced-motion` respetado.
 - Header con `backdrop-blur`.
 
-**Gate:** el usuario aprueba o pide cambios antes de Fase 5. Si se rechaza, se enmienda este ADR o se crea ADR-00X con nueva dirección.
-
-## Actualización Fase 3b
-
-El usuario prefiere dark premium **de momento**, pero pidió comparar con más opciones. Se creó una galería temporal en `/preview` con 5 variantes implementadas como overrides de tokens scoped:
-
-1. `premium` — la actual (favorita provisional)
-2. `aurora` — premium con orbes de luz difuminados en deriva lenta (sin cuadrícula)
-3. `editorial` — tipografía enorme, bordes visibles, mono labels, acento ámbar, sin gradientes
-4. `claro` — off-white minimalista, acento azul profundo
-5. `cyber` — verde neón/cian, tipografía mono, estilo terminal
-
-**Pendiente:** decisión final del usuario → la ganadora se funde en `tokens.css`, se eliminan las variantes y páginas `/preview`, y este ADR pasa a "Aceptado".
-
 ## Consecuencias
 
-- El resto de fases no dependen de la paleta concreta (tokens aíslan el cambio).
-- Contraste AA es requisito explícito (RNF-02): los tokens se verificarán con contraste real.
+- La galería `/preview` y los temas descartados se **eliminaron** del código (commit de consolidación).
+- El diseño se controla desde `tokens.css`: cambios futuros de paleta no tocan componentes.
+- Contraste AA (RNF-02) se verifica en Fase 6 con contraste real.
 
-## Alternativas descartadas (por ahora)
+## Alternativas descartadas
 
-- Editorial/brutalista, minimalista claro, creativo 3D — opciones ofrecidas, elegidas como segunda opción.
+- Aurora (orbes), editorial, minimalista claro, cyber neón — evaluados en pantalla y descartados.

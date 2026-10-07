@@ -2,25 +2,17 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { getLocaleFromPath, getDictionary } from '../i18n/util';
-import { THEME_COLORS, isTheme, type Theme } from '../theme';
 import '../styles/global.css';
-import '../styles/themes/premium.css';
-import '../styles/themes/aurora.css';
-import '../styles/themes/editorial.css';
-import '../styles/themes/claro.css';
-import '../styles/themes/cyber.css';
 
 interface Props {
   title?: string;
   description?: string;
-  theme?: Theme;
 }
 
-const { title, description, theme } = Astro.props;
+const { title, description } = Astro.props;
 const locale = getLocaleFromPath(Astro.url.pathname);
 const t = getDictionary(locale);
 
-const resolvedTheme = isTheme(theme) ? theme : 'premium';
 const fullTitle = title ? `${title} · ${t['hero.name']}` : `${t['hero.name']} — ${t['hero.role']}`;
 const desc = description ?? t['hero.tagline'];
 const canonical = new URL(Astro.url.pathname, Astro.site);
@@ -30,7 +22,7 @@ const alternate = new URL(altPath, Astro.site);
 ---
 
 <!doctype html>
-<html lang={locale} data-theme={resolvedTheme}>
+<html lang={locale}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -46,7 +38,7 @@ const alternate = new URL(altPath, Astro.site);
     <meta property="og:description" content={desc} />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content={locale === 'es' ? 'es_ES' : 'en_GB'} />
-    <meta name="theme-color" content={THEME_COLORS[resolvedTheme]} />
+    <meta name="theme-color" content="#0a0a0b" />
   </head>
   <body>
     <a class="skip-link" href="#main">{t['nav.skip']}</a>
