@@ -48,6 +48,7 @@ const profile = defineCollection({
     email: z.string().email(),
     location_es: z.string(),
     location_en: z.string(),
+    photo: z.string().optional(), // foto del perfil (nombre de archivo)
     // Redes sociales (GitHub, LinkedIn...): label + url.
     socials: z.array(
       z.object({

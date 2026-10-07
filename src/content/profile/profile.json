@@ -5,10 +5,11 @@
   "email": "ivan.cano.p@outlook.com",
   "location_es": "Madrid, España",
   "location_en": "Madrid, Spain",
+  "photo": "mi-foto.jpg",
   "socials": [
     {
       "label": "GitHub",
-      "url": "https://github.com/ivancadev"
+      "url": "https://github.com/ivardev33"
     },
     {
       "label": "LinkedIn",

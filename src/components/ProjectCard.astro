@@ -37,9 +37,8 @@ const cover = getProjectImage(p.cover);
 
 <article class:list={['card', `card-${variant}`]}>
   <a class="card-link" href={href} aria-label={`${p.title} — ${t['projects.detail']}`}>
-    <!-- Zona visual: imagen real o placeholder de iniciales -->
-    <div class:list={['card-visual', cover && 'has-cover']} style={`--rot: ${hue}deg`}>
-      {cover ? (
+    {cover && (
+      <div class:list={['card-visual', 'has-cover']} style={`--rot: ${hue}deg`}>
         <Image
           src={cover}
           alt=""
@@ -48,10 +47,8 @@ const cover = getProjectImage(p.cover);
           loading="lazy"
           decoding="async"
         />
-      ) : (
-        <span class="card-initials" aria-hidden="true">{initials}</span>
-      )}
-    </div>
+      </div>
+    )}
 
     <div class="card-body">
       <!-- Categoría y año -->
